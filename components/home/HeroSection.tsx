@@ -8,128 +8,112 @@ import { ArrowRight, ShieldCheck, Award, Heart, MapPin, Sparkles } from 'lucide-
 
 export default function HeroSection() {
   const [showEarthIntro, setShowEarthIntro] = useState(true);
-  const [stage, setStage] = useState<'earth' | 'mpMap' | 'welcome'>('earth');
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
-    // Stage 1: Earth globe spins & zooms (1.4 seconds)
-    const timer1 = setTimeout(() => {
-      setStage('mpMap');
-    }, 1400);
+    // Stage 1: Earth globe spins & zooms into Ujjain MP (2.4s)
+    const welcomeTimer = setTimeout(() => {
+      setShowWelcome(true);
+    }, 2400);
 
-    // Stage 2: Camera reaches MP Ujjain map & pin drops (1.4 seconds) -> Show Welcome Text
-    const timer2 = setTimeout(() => {
-      setStage('welcome');
-    }, 2800);
-
-    // Stage 3: Auto close intro & reveal main website after 5.0 seconds total
+    // Stage 2: Reveal website after 4.6s total
     const finishTimer = setTimeout(() => {
       setShowEarthIntro(false);
-    }, 5000);
+    }, 4600);
 
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
+      clearTimeout(welcomeTimer);
       clearTimeout(finishTimer);
     };
   }, []);
 
   return (
     <section className="relative w-full min-h-[92vh] flex items-center justify-center overflow-hidden bg-spiritual-gradient text-white">
-      {/* 3-Stage Fullscreen Animation: 3D Earth -> Zoom inside to MP Satellite Map -> "आपका स्वागत है महाकाल नगरी में" -> Website Reveal */}
+      {/* PERFECT ROUND CIRCLE FRAME FOR ENTIRE INTRO (NO RECTANGLE BOXES) */}
       <AnimatePresence>
         {showEarthIntro && (
           <motion.div
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.3 }}
-            transition={{ duration: 0.9, ease: 'easeInOut' }}
+            exit={{ opacity: 0, scale: 1.15 }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
             className="fixed inset-0 z-50 bg-[#100502] flex flex-col items-center justify-center p-4 text-center overflow-hidden"
           >
             {/* Spiritual Cosmic Background Glow */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-600/35 via-amber-950/90 to-[#100502]" />
 
-            {/* STAGE 1: Slow Spinning 3D Earth Globe */}
-            {stage === 'earth' && (
+            {/* Pure Round Circle Globe Container */}
+            <motion.div
+              initial={{ scale: 0.75, opacity: 0 }}
+              animate={{
+                scale: showWelcome ? 1.05 : [0.75, 1.1, 2.5],
+                opacity: [0, 1, 1],
+              }}
+              transition={{
+                duration: 2.4,
+                ease: 'easeInOut',
+              }}
+              className="relative w-[340px] h-[340px] sm:w-[540px] sm:h-[540px] rounded-full overflow-hidden shadow-[0_0_160px_rgba(201,107,24,1)] border-4 border-amber-400/90 z-10 flex items-center justify-center"
+            >
+              {/* Perfectly Straight Upright Earth Image inside Pure Round Circle */}
               <motion.div
-                key="earth-stage"
-                initial={{ scale: 0.75, opacity: 0 }}
-                animate={{ scale: 1.25, opacity: 1, rotate: 180 }}
-                exit={{ scale: 3.5, opacity: 0 }}
-                transition={{ duration: 1.4, ease: 'easeInOut' }}
-                className="relative w-[340px] h-[340px] sm:w-[540px] sm:h-[540px] rounded-full overflow-hidden shadow-[0_0_150px_rgba(201,107,24,1)] border-4 border-amber-400/90 z-10"
+                animate={{ rotate: showWelcome ? 0 : 360 }}
+                transition={{ duration: 2.4, ease: 'linear' }}
+                className="relative w-full h-full"
               >
                 <Image
-                  src="/images/earth.jpg"
-                  alt="Slow Spinning 3D Earth Globe"
+                  src={showWelcome ? '/images/ujjain-map.jpg' : '/images/earth.jpg'}
+                  alt="Round Earth Globe Map"
                   fill
                   className="object-cover"
                   priority
                 />
               </motion.div>
-            )}
 
-            {/* STAGE 2: Deep Zooming into Madhya Pradesh (M.P.) Satellite Map with Pin */}
-            {(stage === 'mpMap' || stage === 'welcome') && (
-              <motion.div
-                key="mp-stage"
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: stage === 'welcome' ? 1.1 : 1, opacity: 1 }}
-                exit={{ scale: 2.2, opacity: 0 }}
-                transition={{ duration: 1.4, ease: 'easeInOut' }}
-                className="relative w-[340px] h-[220px] sm:w-[640px] sm:h-[380px] rounded-3xl overflow-hidden shadow-[0_0_160px_rgba(201,107,24,1)] border-2 border-amber-400 z-10"
-              >
-                <Image
-                  src="/images/ujjain-map.jpg"
-                  alt="Madhya Pradesh Ujjain Map Zoom"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
-
-                {/* Glowing Location Pin on MP Ujjain */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+              {/* Glowing Location Pin Marker inside Round Circle */}
+              {!showWelcome && (
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20">
                   <motion.div
                     animate={{ scale: [1, 1.3, 1] }}
                     transition={{ repeat: Infinity, duration: 1 }}
-                    className="w-14 h-14 rounded-full bg-amber-500/50 border-2 border-white flex items-center justify-center shadow-[0_0_50px_#f59e0b]"
+                    className="w-14 h-14 rounded-full bg-amber-500/50 border-2 border-white flex items-center justify-center shadow-[0_0_40px_#f59e0b]"
                   >
-                    <MapPin className="w-10 h-10 text-amber-200 fill-amber-500" />
+                    <MapPin className="w-9 h-9 text-amber-200 fill-amber-500" />
                   </motion.div>
-                  <span className="mt-2 bg-saffron-gradient text-white font-extrabold text-xs sm:text-sm px-4 py-1.5 rounded-full shadow-2xl border border-amber-300">
-                    📍 उज्जैन (मध्य प्रदेश - M.P.)
+                  <span className="mt-2 bg-saffron-gradient text-white font-extrabold text-xs sm:text-sm px-4 py-1 rounded-full shadow-2xl border border-amber-300 whitespace-nowrap">
+                    📍 उज्जैन (M.P.)
                   </span>
                 </div>
-              </motion.div>
-            )}
-
-            {/* STAGE 3: "आपका स्वागत है महाकाल नगरी में" Screen Appears when camera touches MP */}
-            <AnimatePresence>
-              {stage === 'welcome' && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8, y: 30 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                  className="absolute z-30 flex flex-col items-center justify-center space-y-3.5 px-8 py-7 rounded-3xl bg-black/85 backdrop-blur-xl border-2 border-amber-400/90 shadow-[0_0_100px_rgba(201,107,24,1)] max-w-lg"
-                >
-                  <div className="w-14 h-14 rounded-full bg-saffron-gradient flex items-center justify-center text-white shadow-2xl animate-bounce">
-                    <Sparkles className="w-8 h-8 text-amber-200" />
-                  </div>
-
-                  <h2 className="heading-spiritual text-3xl sm:text-4xl font-extrabold text-amber-300 tracking-wide drop-shadow-md">
-                    जय श्री महाकाल 🙏
-                  </h2>
-
-                  <h3 className="heading-spiritual text-2xl sm:text-3xl font-bold text-amber-50 leading-snug">
-                    आपका स्वागत है महाकाल नगरी में
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-amber-200/90 font-medium">
-                    बाबा महाकालेश्वर की पवित्र अवंतिका (M.P.) भूमि — सिद्ध पूजन एवं विद्वान पंडित परामर्श
-                  </p>
-                </motion.div>
               )}
-            </AnimatePresence>
+
+              {/* Round Circle Welcome Text Overlay (NO RECTANGLE BOX) */}
+              <AnimatePresence>
+                {showWelcome && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0 bg-black/75 backdrop-blur-md rounded-full flex flex-col items-center justify-center p-8 text-center z-30 border-2 border-amber-400/90"
+                  >
+                    <div className="w-13 h-13 rounded-full bg-saffron-gradient flex items-center justify-center text-white shadow-xl animate-bounce mb-2">
+                      <Sparkles className="w-7 h-7 text-amber-200" />
+                    </div>
+
+                    <h2 className="heading-spiritual text-2xl sm:text-4xl font-extrabold text-amber-300 tracking-wide drop-shadow-md">
+                      जय श्री महाकाल 🙏
+                    </h2>
+
+                    <h3 className="heading-spiritual text-lg sm:text-2xl font-bold text-amber-50 leading-snug my-2">
+                      आपका स्वागत है महाकाल नगरी में
+                    </h3>
+
+                    <p className="text-[11px] sm:text-xs text-amber-200/90 font-medium max-w-xs">
+                      बाबा महाकालेश्वर की पवित्र अवंतिका (M.P.) भूमि — सिद्ध पूजन एवं विद्वान पंडित परामर्श
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
