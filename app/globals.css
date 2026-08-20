@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #c96b18;
+    --primary-dark: #8f3f12;
+    --secondary: #7a1f1f;
+    --accent: #d9a441;
+    --background: #fffaf2;
+    --foreground: #2b2118;
+    --muted: #75695d;
+    --border: #eadfce;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body), system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: #ffffff;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #fff8f0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+  }
+}
+
+.heading-spiritual {
+  font-family: var(--font-spiritual), Georgia, serif;
+}
+
+/* Custom Gradient & Glass Utility Classes */
+.bg-spiritual-gradient {
+  background: linear-gradient(135deg, #2b170c 0%, #4a1f11 50%, #1f0b04 100%);
+}
+
+.bg-saffron-gradient {
+  background: linear-gradient(135deg, #d97706 0%, #c96b18 50%, #8f3f12 100%);
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #fbbf24 0%, #d9a441 50%, #b45309 100%);
+}
+
+.bg-glass {
+  background: rgba(255, 250, 242, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.bg-glass-dark {
+  background: rgba(20, 10, 5, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.border-gold {
+  border-color: rgba(217, 164, 65, 0.3);
+}
+
+.shadow-spiritual {
+  box-shadow: 0 10px 30px -5px rgba(201, 107, 24, 0.15);
+}
+
+.shadow-spiritual-hover:hover {
+  box-shadow: 0 20px 40px -10px rgba(201, 107, 24, 0.25);
+}

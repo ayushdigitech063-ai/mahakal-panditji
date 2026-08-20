@@ -1,0 +1,68 @@
+{
+  "common": {
+    "bookNow": "Book Pooja Now",
+    "callPandit": "Call Pandit Ji",
+    "whatsappContact": "WhatsApp Contact",
+    "viewAllPoojas": "View All Poojas",
+    "viewAllPandits": "View All Pandits",
+    "readMore": "Read More",
+    "details": "View Details",
+    "submit": "Submit Request",
+    "startingFrom": "Starting Price",
+    "certifiedPandits": "100% Certified Pandits",
+    "happyDevotees": "25,000+ Happy Devotees",
+    "yearsExp": "20+ Years Experience"
+  },
+  "nav": {
+    "home": "Home",
+    "poojas": "Poojas & Rituals",
+    "pandits": "Our Pandits",
+    "about": "About Us",
+    "blog": "Blog & Articles",
+    "contact": "Contact Us",
+    "bookConsultation": "Book Consultation",
+    "selectLanguage": "Select Language"
+  },
+  "hero": {
+    "eyebrow": "Ujjain Mahakal — Authentic Vedic Worship Center",
+    "titlePrefix": "Perform Authentic Rituals with Certified ",
+    "titleSuffix": " in Ujjain Mahakal Dham",
+    "subtitle": "Get Kaal Sarp Dosh, Rudrabhishek, and Grah Shanti done by verified Vedic Gurus.",
+    "findPanditBtn": "Find Pandit Ji",
+    "explorePoojaBtn": "Explore Poojas",
+    "trust1": "100% Verified Vedic Scholars",
+    "trust2": "25,000+ Happy Devotees",
+    "trust3": "20+ Years Experience"
+  },
+  "sections": {
+    "poojasTag": "SACRED VEDIC RITUALS",
+    "poojasTitle": "Popular Poojas & Dosh Nivarana",
+    "poojasSub": "Authentic rituals performed in the holy city of Ujjain Mahakal",
+    "panditsTag": "CERTIFIED VEDA SCHOLARS",
+    "panditsTitle": "Ujjain Verified Pandits & Gurus",
+    "panditsSub": "Experienced Vedic scholars performing authentic rituals with proper Sankalp",
+    "featuresTag": "WHY CHOOSE MAHAKAL PANDIT",
+    "whyUsTitle": "Why Book With Mahakal Pandit?",
+    "whyUsSubtitle": "We ensure complete Vedic authenticity and proper samagri at Mahakaleshwar Dham.",
+    "feature1Title": "Certified Vedic Pandits",
+    "feature1Desc": "Trained from traditional Gurukuls in Kashi & Ujjain.",
+    "feature2Title": "Complete Samagri Included",
+    "feature2Desc": "Authentic items, sacred ash, Ganga water included.",
+    "feature3Title": "Live Video Sankalp",
+    "feature3Desc": "Can not visit Ujjain? Join live video stream for Sankalp.",
+    "blogTag": "DIVINE KNOWLEDGE",
+    "blogTitle": "Spiritual Articles & Mahakal Darshan Guide",
+    "blogSub": "Read authentic guides on Mahakal Darshan, Rudrabhishek & Dosh Nivarana",
+    "reviewsTag": "DEVOTEE REVIEWS",
+    "reviewsTitle": "What Devotees Say About Us",
+    "faqTag": "COMMON QUESTIONS",
+    "faqTitle": "Frequently Asked Questions (FAQ)"
+  },
+  "footer": {
+    "desc": "Trusted platform for sacred dosh nivarana poojas at Mahakaleshwar Dham, Ujjain.",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Details",
+    "address": "Mahakal Mandir Marg, Ujjain, MP 456001",
+    "allRightsReserved": "All Rights Reserved"
+  }
+}
