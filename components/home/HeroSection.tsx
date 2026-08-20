@@ -7,29 +7,37 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ShieldCheck, Award, Heart, MapPin, Sparkles } from 'lucide-react';
 
 export default function HeroSection() {
-  const [showEarthIntro, setShowEarthIntro] = useState(true);
+  const [showEarthIntro, setShowEarthIntro] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
-    // Stage 1: Earth globe spins & zooms into Ujjain MP (2.4s)
-    const welcomeTimer = setTimeout(() => {
-      setShowWelcome(true);
-    }, 2400);
+    // Check if user has ALREADY SEEN the intro in this browser session
+    const hasSeenIntro = sessionStorage.getItem('hasSeenEarthIntro');
 
-    // Stage 2: Reveal website after 4.6s total
-    const finishTimer = setTimeout(() => {
-      setShowEarthIntro(false);
-    }, 4600);
+    if (!hasSeenIntro) {
+      setShowEarthIntro(true);
+      sessionStorage.setItem('hasSeenEarthIntro', 'true');
 
-    return () => {
-      clearTimeout(welcomeTimer);
-      clearTimeout(finishTimer);
-    };
+      // Stage 1: Earth spins & zooms into Ujjain MP (2.4 seconds)
+      const welcomeTimer = setTimeout(() => {
+        setShowWelcome(true);
+      }, 2400);
+
+      // Stage 2: Dismiss intro overlay & reveal website (4.6 seconds total)
+      const finishTimer = setTimeout(() => {
+        setShowEarthIntro(false);
+      }, 4600);
+
+      return () => {
+        clearTimeout(welcomeTimer);
+        clearTimeout(finishTimer);
+      };
+    }
   }, []);
 
   return (
     <section className="relative w-full min-h-[92vh] flex items-center justify-center overflow-hidden bg-spiritual-gradient text-white">
-      {/* PERFECT ROUND CIRCLE FRAME FOR ENTIRE INTRO (NO RECTANGLE BOXES) */}
+      {/* Earth Intro Animation - RUNS EXACTLY 1 TIME PER USER SESSION */}
       <AnimatePresence>
         {showEarthIntro && (
           <motion.div
@@ -85,7 +93,7 @@ export default function HeroSection() {
                 </div>
               )}
 
-              {/* Round Circle Welcome Text Overlay (NO RECTANGLE BOX) */}
+              {/* Round Circle Welcome Text Overlay */}
               <AnimatePresence>
                 {showWelcome && (
                   <motion.div
