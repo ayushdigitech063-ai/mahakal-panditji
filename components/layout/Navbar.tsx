@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Flame, Phone, MessageCircle, ChevronDown, Sparkles } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle, ChevronDown, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { mockPoojas } from '@/data/mockPoojas';
 
@@ -47,15 +48,21 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 w-full ${
         isScrolled
-          ? 'bg-[#fffaf2]/95 backdrop-blur-md shadow-lg py-4 border-b border-[#eadfce]'
-          : 'bg-[#fffaf2] py-5 border-b border-[#eadfce]/80'
+          ? 'bg-[#fffaf2]/95 backdrop-blur-md shadow-lg py-3.5 border-b border-[#eadfce]'
+          : 'bg-[#fffaf2] py-4 border-b border-[#eadfce]/80'
       }`}
     >
       <div className="w-full px-4 sm:px-8 lg:px-12 flex items-center justify-between gap-4">
-        {/* Left Side: Brand Logo */}
+        {/* Left Side: Brand Logo with Authentic Pandit Ji Photo */}
         <Link href="/" className="flex items-center gap-3 group shrink-0">
-          <div className="w-11 h-11 rounded-full bg-saffron-gradient flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-            <Flame className="w-6 h-6 text-amber-200 fill-amber-200/30 animate-pulse" />
+          <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-amber-500 shadow-md group-hover:scale-105 transition-transform bg-amber-100">
+            <Image
+              src="/images/pandit-ji.jpg"
+              alt="पंडित जी महाकाल उज्जैन"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
           <div className="flex flex-col">
             <span className="heading-spiritual text-xl sm:text-2xl font-bold tracking-tight text-[#8f3f12] group-hover:text-[#c96b18] transition-colors leading-none">
