@@ -4,6 +4,7 @@ import './globals.css';
 import AnnouncementBar from '@/components/layout/AnnouncementBar';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import FloatingActionButtons from '@/components/ui/FloatingActionButtons';
 import { LanguageProvider } from '@/context/LanguageContext';
 
 const cormorant = Cormorant_Garamond({
@@ -20,9 +21,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Mahakal Pandit | Trusted Pandits & Pooja Services in Ujjain',
+  title: 'महाकाल पंडित | उज्जैन सिद्ध पूजन एवं पंडित बुकिंग केंद्र',
   description:
-    'Book experienced Veda Pandits for authentic Mahakal Pooja, Rudrabhishek, Kaal Sarp Dosh Shanti, and Grah Shanti in Ujjain.',
+    'उज्जैन महाकालेश्वर धाम में काल सर्प दोष, रुद्राभिषेक, भात पूजा एवं ग्रह शांति अनुष्ठान हेतु प्रामाणिक विद्वान पंडित जी बुकिंग।',
 };
 
 export default function RootLayout({
@@ -38,6 +39,7 @@ export default function RootLayout({
           <Navbar />
           <main className="flex-grow">{children}</main>
           <Footer />
+          <FloatingActionButtons />
         </LanguageProvider>
       </body>
     </html>
