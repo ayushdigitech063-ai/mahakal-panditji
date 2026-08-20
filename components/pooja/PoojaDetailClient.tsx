@@ -2,9 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Clock, CheckCircle2, ShieldCheck, Sparkles, HelpCircle } from 'lucide-react';
+import { Clock, CheckCircle2, ShieldCheck, Sparkles, HelpCircle, Phone, MessageCircle } from 'lucide-react';
 import { Pooja } from '@/types/pooja';
-import { openBookingModal } from '@/lib/sweetalert';
 import ContactSection from '@/components/forms/ContactSection';
 
 interface PoojaDetailClientProps {
@@ -12,12 +11,11 @@ interface PoojaDetailClientProps {
 }
 
 export default function PoojaDetailClient({ pooja }: PoojaDetailClientProps) {
-  const handleBooking = () => {
-    openBookingModal({
-      poojaName: pooja.name,
-      startingPrice: pooja.startingPrice,
-    });
-  };
+  const whatsappNumber = '919876543210';
+  const whatsappMessage = encodeURIComponent(
+    `जय श्री महाकाल 🙏 मुझे ${pooja.name} की बुकिंग एवं मुहूर्त परामर्श हेतु संपर्क करना है।`
+  );
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   return (
     <div className="bg-[#fffaf2] min-h-screen py-10">
@@ -47,11 +45,11 @@ export default function PoojaDetailClient({ pooja }: PoojaDetailClientProps) {
             <div className="flex flex-wrap items-center gap-6 pt-2 text-xs sm:text-sm text-amber-200">
               <span className="flex items-center gap-1.5">
                 <Clock className="w-4 h-4 text-amber-400" />
-                Duration: {pooja.duration}
+                समय अवधि: {pooja.duration}
               </span>
               <span className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-amber-400" />
-                {pooja.samagriIncluded ? 'Complete Samagri Provided' : 'Custom Setup'}
+                {pooja.samagriIncluded ? 'संपूर्ण प्रामाणिक सामग्री शामिल' : 'विशेष व्यवस्था'}
               </span>
             </div>
           </div>
@@ -64,7 +62,7 @@ export default function PoojaDetailClient({ pooja }: PoojaDetailClientProps) {
             {/* Description */}
             <div className="bg-white border border-[#eadfce] rounded-3xl p-6 md:p-8 space-y-4 shadow-sm">
               <h2 className="heading-spiritual text-2xl font-bold text-[#8f3f12]">
-                About {pooja.name}
+                {pooja.name} के बारे में
               </h2>
               <p className="text-sm text-[#2b2118] leading-relaxed font-normal">
                 {pooja.fullDescription}
@@ -74,7 +72,7 @@ export default function PoojaDetailClient({ pooja }: PoojaDetailClientProps) {
             {/* Benefits */}
             <div className="bg-white border border-[#eadfce] rounded-3xl p-6 md:p-8 space-y-4 shadow-sm">
               <h2 className="heading-spiritual text-2xl font-bold text-[#8f3f12]">
-                Spiritual Benefits
+                धार्मिक एवं आध्यात्मिक लाभ
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {pooja.benefits.map((benefit, i) => (
@@ -94,7 +92,7 @@ export default function PoojaDetailClient({ pooja }: PoojaDetailClientProps) {
             {/* Procedure */}
             <div className="bg-white border border-[#eadfce] rounded-3xl p-6 md:p-8 space-y-4 shadow-sm">
               <h2 className="heading-spiritual text-2xl font-bold text-[#8f3f12]">
-                Vedic Vidhi & Step-by-Step Procedure
+                वैदिक विधि एवं पूजन प्रक्रिया
               </h2>
               <ol className="space-y-3">
                 {pooja.procedure?.map((step: string, idx: number) => (
@@ -113,15 +111,15 @@ export default function PoojaDetailClient({ pooja }: PoojaDetailClientProps) {
               <div className="bg-white border border-[#eadfce] rounded-3xl p-6 md:p-8 space-y-4 shadow-sm">
                 <h2 className="heading-spiritual text-2xl font-bold text-[#8f3f12] flex items-center gap-2">
                   <HelpCircle className="w-6 h-6 text-[#c96b18]" />
-                  <span>Frequently Asked Questions</span>
+                  <span>अक्सर पूछे जाने वाले प्रश्न (FAQs)</span>
                 </h2>
                 <div className="space-y-4">
                   {pooja.faqs.map((faq, index) => (
                     <div key={index} className="p-4 rounded-2xl bg-[#fffaf2] border border-[#eadfce]">
                       <h4 className="text-sm font-bold text-[#8f3f12] mb-1">
-                        Q: {faq.question}
+                        प्रश्न: {faq.question}
                       </h4>
-                      <p className="text-xs sm:text-sm text-[#75695d]">Ans: {faq.answer}</p>
+                      <p className="text-xs sm:text-sm text-[#75695d]">उत्तर: {faq.answer}</p>
                     </div>
                   ))}
                 </div>
@@ -129,38 +127,51 @@ export default function PoojaDetailClient({ pooja }: PoojaDetailClientProps) {
             )}
           </div>
 
-          {/* Sticky Booking Card */}
+          {/* Sticky Direct WhatsApp & Call Action Card */}
           <div className="lg:col-span-4 sticky top-24">
             <div className="bg-white border border-[#eadfce] rounded-3xl p-6 md:p-8 shadow-xl space-y-6">
               <div className="border-b border-[#eadfce] pb-4">
-                <span className="text-xs uppercase font-bold text-[#75695d]">Ritual Price Starts From</span>
+                <span className="text-xs uppercase font-bold text-[#75695d]">अनुष्ठान प्रारंभिक शुल्क</span>
                 <div className="heading-spiritual text-4xl font-bold text-[#8f3f12] mt-1">
                   ₹{pooja.startingPrice}
                 </div>
-                <p className="text-xs text-[#75695d] mt-1">Includes Dakshina & Complete Pooja Samagri</p>
+                <p className="text-xs text-[#75695d] mt-1">शास्त्रीय दक्षिणा एवं संपूर्ण सामग्री सहित</p>
               </div>
 
               <div className="space-y-3 text-xs text-[#2b2118]">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#c96b18]" />
-                  <span>Gurukul Certified Veda Pandits</span>
+                  <span>गुरुकुल प्रशिक्षित सिद्ध वेद पंडित</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#c96b18]" />
-                  <span>Available In-Person at Ujjain or Online</span>
+                  <span>उज्जैन में प्रत्यक्ष अथवा लाइव वीडियो संकल्प</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-[#c96b18]" />
-                  <span>Personalized Video & Prasad Shipping</span>
+                  <span>व्यक्तिगत वीडियो एवं प्रसाद कूरियर सेवा</span>
                 </div>
               </div>
 
-              <button
-                onClick={handleBooking}
-                className="w-full bg-saffron-gradient text-white font-bold py-4 rounded-2xl shadow-spiritual hover:scale-102 active:scale-98 transition-all"
-              >
-                Book {pooja.name} Now
-              </button>
+              <div className="space-y-2.5 pt-2">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-2xl shadow-md hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2 text-sm"
+                >
+                  <MessageCircle className="w-4 h-4 fill-white" />
+                  <span>WhatsApp पर अभी बुक करें</span>
+                </a>
+
+                <a
+                  href="tel:+919876543210"
+                  className="w-full border border-[#eadfce] hover:border-[#c96b18] text-[#8f3f12] font-bold py-3 rounded-2xl transition-all flex items-center justify-center gap-2 text-xs bg-[#fffaf2]"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#c96b18]" />
+                  <span>पंडित जी से फोन पर बात करें</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

@@ -30,9 +30,9 @@ export default function PoojaClientListing({ initialPoojas }: PoojaClientListing
     <div className="py-12 bg-[#fffaf2] min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="Sacred Ritual Services"
-          title="Explore Authentic Vedic Poojas"
-          subtitle="Select sacred ceremonies performed by certified Pandits at Mahakal Kshetra, Shipra Ghat, or via live video stream."
+          eyebrow="सिद्ध वैदिक अनुष्ठान"
+          title="उज्जैन महाकाल सिद्ध पूजन सेवाएं"
+          subtitle="महाकालेश्वर ज्योतिर्लिंग, शिप्रा तट एवं मंगलनाथ धाम में सिद्ध पंडितों द्वारा कराई जाने वाली समस्त पूजाएं।"
         />
 
         {/* Filter Bar */}
@@ -41,7 +41,7 @@ export default function PoojaClientListing({ initialPoojas }: PoojaClientListing
             <Search className="w-4 h-4 text-[#75695d] absolute left-4 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search pooja by name or benefits..."
+              placeholder="पूजा का नाम या लाभ खोजें..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-11 pr-4 py-3 bg-[#fffaf2] border border-[#eadfce] rounded-xl text-sm focus:outline-none focus:border-[#c96b18]"
@@ -55,7 +55,7 @@ export default function PoojaClientListing({ initialPoojas }: PoojaClientListing
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="w-full pl-11 pr-4 py-3 bg-[#fffaf2] border border-[#eadfce] rounded-xl text-sm focus:outline-none focus:border-[#c96b18]"
             >
-              <option value="">All Pooja Categories</option>
+              <option value="">सभी पूजा श्रेणियां</option>
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
                   {cat}
@@ -75,10 +75,10 @@ export default function PoojaClientListing({ initialPoojas }: PoojaClientListing
         ) : (
           <div className="bg-white border border-[#eadfce] rounded-3xl p-12 text-center my-10 max-w-md mx-auto">
             <p className="heading-spiritual text-2xl font-bold text-[#8f3f12] mb-2">
-              No Poojas Found
+              कोई पूजा नहीं मिली
             </p>
             <p className="text-sm text-[#75695d] mb-6">
-              Try adjusting your search criteria or resetting filters.
+              कृपया दूसरा शब्द लिखकर खोजें या फ़िल्टर रीसेट करें।
             </p>
             <button
               onClick={() => {
@@ -87,7 +87,7 @@ export default function PoojaClientListing({ initialPoojas }: PoojaClientListing
               }}
               className="bg-saffron-gradient text-white text-xs font-bold px-6 py-3 rounded-full shadow-md"
             >
-              Reset Filters
+              फ़िल्टर रीसेट करें
             </button>
           </div>
         )}

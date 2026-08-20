@@ -3,185 +3,187 @@ import { Pooja } from '@/types/pooja';
 export const SEEDED_POOJAS: Pooja[] = [
   {
     id: 'pooja-1',
-    name: 'Mahakal Pooja',
+    name: 'श्री महाकाल भस्म श्रृंगार एवं विशेष पूजा',
     slug: 'mahakal-pooja',
-    shortDescription: 'Sacred worship of Lord Mahakaleshwar for protection, longevity, and divine grace in Ujjain.',
-    fullDescription: 'Mahakal Pooja is a sacred ceremony performed to seek the supreme blessings of Lord Shiva in his fiercest and most protective avatar, Mahakal. Performed on the banks of Shipra in Ujjain or at holy sanctums, this pooja eliminates dark energies, fear of untimely death, and grants strength.',
+    shortDescription: 'बाबा महाकाल का विशेष पंचामृत अभिषेक, दिव्य भस्म लेपन एवं महाआरती दर्शन।',
+    fullDescription: 'महाकाल पूजा भगवान शिव के महाकाल स्वरूप की आराधना का सबसे सिद्ध अनुष्ठान है। उज्जैन महाकाल धाम अथवा पवित्र शिप्रा तट पर इस पूजा के संपादन से समस्त भय, अकाल मृत्यु योग, तंत्र बाधा एवं नकारात्मक ऊर्जा का नाश होता है।',
     image: 'https://images.unsplash.com/photo-1609102026400-3d0817730704?auto=format&fit=crop&w=800&q=80',
     benefits: [
-      'Removes fear of negative planetary transitions and untimely obstacles.',
-      'Brings supreme mental tranquility, clarity, and spiritual elevation.',
-      'Protects business and personal life from malevolent influences.',
-      'Invokes the powerful protective energy of Lord Shiva Mahakal.'
+      'अकाल मृत्यु भय एवं उग्र ग्रह बाधाओं से सुरक्षा',
+      'मानसिक परम शांति, एकाग्रता एवं आत्मबल की प्राप्ति',
+      'व्यापार, नौकरी एवं व्यक्तिगत जीवन में सर्वत्र सुरक्षा',
+      'भगवान महाकाल की प्रत्यक्ष कृपा एवं आशीर्वाद'
     ],
     procedure: [
-      'Sankalpam (Sacred Vow with name and gotra)',
-      'Ganesh Ambika Pujan & Kalash Sthapana',
-      'Laghu Rudra / Mahakal Mantras Chanting',
-      'Abhishekam with Panchamrit, Bhasma & Sacred Water',
-      'Aarti, Havan & Pushpanjali'
+      'संकल्प (नाम, गोत्र एवं स्थान के साथ शास्त्रीय संकल्प)',
+      'गणेश-अंबिका पूजन एवं कलश स्थापना',
+      'लघु रुद्र / महाकाल सिद्ध मंत्र जाप',
+      'पंचामृत, भस्म, केसर जल एवं गंगाजल से रुद्राभिषेक',
+      'महाआरती, हवन एवं पुष्पांचली'
     ],
-    duration: '2 - 3 Hours',
+    duration: '2 से 3 घंटे',
     samagriIncluded: true,
     startingPrice: 3500,
-    category: 'Shiva Seva',
+    category: 'शिव सेवा अनुष्ठान',
     isMukhya: true,
     faqs: [
       {
-        question: 'Can this pooja be performed online on my behalf?',
-        answer: 'Yes, Pandit Ji can perform the Sankalp in your name with live video feed or personalized video recordings.'
+        question: 'क्या यह पूजा हमारे नाम से ऑनलाइन संपन्न हो सकती है?',
+        answer: 'हाँ, पंडित जी द्वारा आपके नाम-गोत्र का संकल्प लेकर लाइव वीडियो अथवा संपूर्ण वीडियो रिकॉर्डिंग भेजी जाती है।'
       },
       {
-        question: 'What items do I need to prepare if attending in person?',
-        answer: 'All primary Samagri is arranged by our team. Devotees are requested to wear traditional clean attire.'
+        question: 'उज्जैन आने पर सामग्री की क्या व्यवस्था रहेगी?',
+        answer: 'पूजन हेतु सभी प्रामाणिक सामग्री, हवन काष्ठ, भस्म एवं गंगाजल हमारी टीम द्वारा arranged रहता है।'
       }
     ]
   },
   {
     id: 'pooja-2',
-    name: 'Rudrabhishek',
+    name: 'महाकालेश्वर रुद्राभिषेक पूजा (Rudrabhishek)',
     slug: 'rudrabhishek',
-    shortDescription: 'Holy bath ritual offering 108 Vedic chants for Lord Shiva to wash away past karma and bestow happiness.',
-    fullDescription: 'Rudrabhishek is one of the most powerful ancient Vedic rituals dedicated to Lord Shiva. By bathing the Shivling with Panchamrit, Sugandhit Jal, Ganga Jal, and Honey while chanting Sri Rudram, all desires are fulfilled and cosmic peace is attained.',
+    shortDescription: 'भगवान शिव का दूध, दही, घृत, मधु एवं गंगाजल से 108 वैदिक रुद्राष्टाध्यायी मंत्रों द्वारा सिद्ध अभिषेक।',
+    fullDescription: 'शिवपुराण के अनुसार रुद्राभिषेक भगवान शिव को प्रसन्न करने का सबसे सिद्ध एवं प्राचीन वैदिक उपाय है। उज्जैन महाकाल धाम में शिवलिंग का श्रीरुद्रम पाठ से अभिषेक करने से जन्म-जन्मांतर के पापकर्म कटते हैं और समस्त मनोकामनाएं पूर्ण होती हैं।',
     image: 'https://images.unsplash.com/photo-1545641203-7d072a14e3b2?auto=format&fit=crop&w=800&q=80',
     benefits: [
-      'Neutralizes karmic debts and chronic ailments.',
-      'Bestows prosperity, harmonious family bonds, and peace.',
-      'Clears negative planetary influences (Shani / Rahu).',
-      'Provides deep spiritual rejuvenation and focus.'
+      'पूर्व संचित पाप कर्मों एवं असाध्य रोगों से मुक्ति',
+      'परिवार में सुख, समृद्धि, धन-धान्य एवं परम शांति का वास',
+      'शनि, राहु एवं केतु की अशुभ दशाओं का शमन',
+      'आध्यात्मिक ऊर्जा, दीर्घायु एवं सफलता की प्राप्ति'
     ],
     procedure: [
-      'Sankalp with family Gotra details',
-      'Rudra Parayan Chanting (11 or 121 recitations)',
-      'Continuous Abhishekam with Milk, Curd, Ghee, Honey & Water',
-      'Maha Aarti & Prasad Distribution'
+      'यजमान के गोत्र व नाम का संकल्प',
+      'रुद्र सूक्त एवं श्रीरुद्रम पाठ',
+      'दूध, दही, घृत, शर्करा, शहद व गंगाजल से सतत अभिषेक',
+      'महाआरती एवं भस्म-प्रसाद वितरण'
     ],
-    duration: '1.5 - 2.5 Hours',
+    duration: '1.5 से 2.5 घंटे',
     samagriIncluded: true,
     startingPrice: 3100,
-    category: 'Abhishekam',
+    category: 'रुद्राभिषेक',
     isMukhya: true,
     faqs: [
       {
-        question: 'Which day is best for Rudrabhishek?',
-        answer: 'Mondays, Shivratri, Pradosh, and Shravan month are exceptionally auspicious.'
+        question: 'रुद्राभिषेक के लिए कौन सा दिन सर्वोत्तम माना जाता है?',
+        answer: 'सोमवार, महाशिवरात्रि, प्रदोष काल एवं संपूर्ण श्रावण मास अत्यंत शुभ फलदायी होते हैं।'
       }
     ]
   },
   {
     id: 'pooja-3',
-    name: 'Kaal Sarp Dosh Pooja',
+    name: 'काल सर्प दोष शांति पूजा (Kaal Sarp Dosh)',
     slug: 'kaal-sarp-dosh-pooja',
-    shortDescription: 'Specialized Ujjain ritual to resolve planetary misalignment caused by Rahu and Ketu.',
-    fullDescription: 'When all seven planets are hemmed between Rahu and Ketu in a horoscope, Kaal Sarp Dosh occurs. Ujjain is universally revered as the supreme location for Kaal Sarp Dosh Nivaran. This ritual eliminates struggles in career, marriage, and health.',
+    shortDescription: 'उज्जैन सिद्ध क्षेत्र में राहु-केतु ग्रह दोष शांति एवं नाग-नागिन आहुति अनुष्ठान।',
+    fullDescription: 'जब जन्मकुंडली में सभी सातों ग्रह राहु और केतु के बीच आ जाते हैं तब काल सर्प दोष बनता है। उज्जैन महाकाल क्षेत्र को काल सर्प दोष निवारण हेतु विश्व का सबसे सिद्ध स्थान माना गया है। यहाँ नाग-नागिन पूजन एवं तर्पण से व्यापार, विवाह एवं स्वास्थ्य की रुकावटें समाप्त होती हैं।',
     image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=800&q=80',
     benefits: [
-      'Removes recurring obstacles in financial and professional life.',
-      'Restores peace of mind and overcomes chronic anxiety.',
-      'Encourages success in higher studies and business ventures.',
-      'Resolves marital delays and relationship strain.'
+      'व्यापारिक, करियर एवं वित्तीय जीवन की रुकावटों से मुक्ति',
+      'मानसिक अशान्ति, तनाव एवं अकारण भय का शमन',
+      'उच्च शिक्षा, प्रतियोगिता एवं विदेश यात्रा के योग',
+      'विवाह में हो रही देरी एवं पारिवारिक क्लेश का अंत'
     ],
     procedure: [
-      'Rahu-Ketu Nag Pujan & Sarpa Bali',
-      'Maha Sankalp at Kshipra Ghat / Sanctum',
-      'Jaap of Rahu-Ketu Vedic Mantras',
-      'Nag Naagin Visarjan in sacred waters',
-      'Daan and Purna Ahuti Havan'
+      'राहु-केतु एवं नाग-नागिन प्रतिमा पूजन',
+      'शिप्रा घाट पर महासंकल्प एवं स्नान',
+      'वैदिक राहु-केतु जाप एवं मंत्र परायण',
+      'पवित्र जल में नाग प्रतिमा विसर्जन',
+      'पूर्णाहुति हवन एवं दान'
     ],
-    duration: '3 - 4 Hours',
+    duration: '3 से 4 घंटे',
     samagriIncluded: true,
     startingPrice: 4500,
-    category: 'Dosh Shanti',
+    category: 'दोष शांति अनुष्ठान',
     isMukhya: true,
     faqs: [
       {
-        question: 'Why is Ujjain recommended for Kaal Sarp Dosh?',
-        answer: 'Ujjain lies on the Tropic of Cancer and is governed by Lord Mahakal (Master of Time), making it uniquely powerful for Rahu-Ketu remedies.'
+        question: 'काल सर्प दोष पूजा हेतु उज्जैन ही क्यों प्रसिद्ध है?',
+        answer: 'उज्जैन कर्क रेखा पर स्थित है और महाकाल स्वयं काल (समय) के अधिपति हैं, इसलिए राहु-केतु दोष का निवारण उज्जैन में ही सिद्ध होता है।'
       }
     ]
   },
   {
     id: 'pooja-4',
-    name: 'Navgraha Shanti',
+    name: 'नवग्रह शांति हवन एवं जाप (Navgraha Shanti)',
     slug: 'navgraha-shanti',
-    shortDescription: 'Harmonize all 9 astrological planets for prosperity, good health, and success.',
-    fullDescription: 'Navgraha Shanti Pooja aligns the nine planets (Surya, Chandra, Mangal, Budh, Guru, Shukra, Shani, Rahu, Ketu). It reduces malefic impacts and enhances beneficial cosmic vibrations in your birth chart.',
+    shortDescription: 'सूर्यादि 9 ग्रहों के दुष्प्रभावों को दूर कर जीवन में तरक्की, स्वास्थ्य व धनलाभ हेतु अनुष्ठान।',
+    fullDescription: 'नवग्रह शांति पूजा सूर्यादि नवग्रहों (सूर्य, चंद्र, मंगल, बुध, गुरु, शुक्र, शनि, राहु, केतु) की उग्रता को शांत करने हेतु की जाती है। इस अनुष्ठान से ग्रह जनित बाधायें समाप्त होकर भाग्य का सहयोग प्राप्त होता है।',
     image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
     benefits: [
-      'Balances overall energy fields and personal aura.',
-      'Prevents sudden career drops or health ailments.',
-      'Harmonizes planetary periods (Dasha and Antardasha).',
-      'Brings luck, wisdom, and financial stability.'
+      'शरीर और मन के औरा (Aura) की ऊर्जा में संतुलन',
+      'अचानक करियर गिरावट या स्वास्थ्य संकट से बचाव',
+      'ग्रहों की महादशा और अंतर्दशा में शुभ फलों की प्राप्ति',
+      'बुद्धि, संपत्ति एवं पारिवारिक प्रेम में निरंतर वृद्धि'
     ],
     procedure: [
-      'Navgraha Sthapana & Avahan',
-      'Specific Mantras Chanting for each Planet',
-      'Navgraha Havan with specific Woods & Samagri',
-      'Planetary Grain Daan & Aartis'
+      'नवग्रह मंडल स्थापना एवं अवगाहन',
+      'प्रत्येक ग्रह के सिद्ध वैदिक मंत्रों का जाप',
+      'नवग्रह समिधा एवं औषधियों से महाहवन',
+      'ग्रह अन्न दान एवं महाआरती'
     ],
-    duration: '2 - 3 Hours',
+    duration: '2 से 3 घंटे',
     samagriIncluded: true,
     startingPrice: 2800,
-    category: 'Grah Shanti',
+    category: 'ग्रह शांति अनुष्ठान',
     isMukhya: true,
     faqs: [
       {
-        question: 'Should I bring my Kundali?',
-        answer: 'Pandit Ji will review birth details prior to the ceremony to focus on malefic planets.'
+        question: 'क्या पूजा से पहले कुंडली दिखाना आवश्यक है?',
+        answer: 'हाँ, पंडित जी आपकी जन्म कुंडली देखकर अशुभ ग्रहों पर विशेष मंत्र जाप केंद्रित करते हैं।'
       }
     ]
   },
   {
     id: 'pooja-5',
-    name: 'Grah Shanti',
+    name: 'मंगल दोष एवं भात पूजा (Mangal Bhat Pooja)',
     slug: 'grah-shanti',
-    shortDescription: 'Peace ritual for home and family to invite divine blessings and harmonious living.',
-    fullDescription: 'Grah Shanti Pooja purifies living environments, banishing negative forces and invoking peace, prosperity, and joy for all family members.',
+    shortDescription: 'उज्जैन मंगलनाथ मंदिर क्षेत्र में सिद्ध मंगल दोष शमन एवं भात पूजा।',
+    fullDescription: 'उज्जैन का मंगलनाथ मंदिर संपूर्ण पृथ्वी पर मंगल देव की जन्मभूमि माना जाता है। यहाँ शिवलिंग पर पके हुए चावल (भात) से श्रृंगार एवं कुंकुम पूजा करने से उग्र मांगलिक दोष शांत होता है एवं वैवाहिक जीवन में सुख प्राप्त होता है।',
     image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
     benefits: [
-      'Ensures domestic bliss and mutual understanding.',
-      'Clears lingering negative aura from residential premises.',
-      'Fosters financial growth and physical well-being.'
+      'उग्र मांगलिक दोष का स्थायी शमन',
+      'विवाह में हो रहे विलंब का त्वरित समाधान',
+      'भूमि, भवन, संपत्ति एवं वाहन सुख की प्राप्ति',
+      'क्रोध एवं रक्त विकारों पर शांति'
     ],
     procedure: [
-      'Kula Devata Pujan',
-      'Vastu & Grah Mandal Sthapana',
-      'Peace Havan & Purna Ahuti'
+      'मंगल देव अवगाहन एवं पूजन',
+      'शिवलिंग भात श्रृंगार एवं कुंकुम अर्चन',
+      'मंगल शांति हवन एवं प्रसाद'
     ],
-    duration: '2 Hours',
+    duration: '2 से 3 घंटे',
     samagriIncluded: true,
     startingPrice: 2500,
-    category: 'Grah Shanti',
+    category: 'ग्रह शांति अनुष्ठान',
     isMukhya: true,
     faqs: []
   },
   {
     id: 'pooja-6',
-    name: 'Maha Mrityunjaya Jaap',
+    name: 'महामृत्युंजय जाप अनुष्ठान (Maha Mrityunjaya)',
     slug: 'maha-mrityunjaya-jaap',
-    shortDescription: 'Powerful recitation of 1,25,000 Vedic Mantras for life-protection and holistic healing.',
-    fullDescription: 'The Maha Mrityunjaya Mantra is an immortal divine hymn from the Rigveda. Performing this Jaap creates an impenetrable shield against fatal illnesses, accidents, and life obstacles.',
+    shortDescription: '1,25,000 सिद्ध महामृत्युंजय मंत्र जाप एवं संजीवनी हवन द्वारा जीवन रक्षा कवच।',
+    fullDescription: 'ऋग्वेद का महामृत्युंजय मंत्र अमोघ संजीवनी विद्या है। उज्जैन महाकाल धाम में सिद्ध विद्वान ब्राह्मणों द्वारा 1,25,000 मंत्रों का सस्वर पाठ एवं दशांश हवन करने से असाध्य रोगों, दुर्घटनाओं एवं जीवन संकटों से दिव्य रक्षा होती है।',
     image: 'https://images.unsplash.com/photo-1609102026400-3d0817730704?auto=format&fit=crop&w=800&q=80',
     benefits: [
-      'Grants long health, rejuvenation, and physical vigor.',
-      'Neutralizes acute planetary affliction causing severe health crises.',
-      'Infuses divine grace, courage, and spiritual awakening.'
+      'असाध्य बीमारियों, काया संकट एवं दुर्घटनाओं से रक्षा',
+      'निरोगी काया, दीर्घायु एवं अभेद्य सुरक्षा कवच',
+      'शत्रु बाधा, तंत्र दोष एवं मानसिक भय का सर्वनाश',
+      'आध्यात्मिक ऊर्जा एवं असीम शांति'
     ],
     procedure: [
-      'Sankalp with Gotra & Specific Intention',
-      'Continuous Chanting by Qualified Veda Pandits',
-      'Daily Abhishekam',
-      'Grand Dashansh Havan & Tarpan'
+      'गोत्र व नाम से संकल्प',
+      'गुरुकुल ब्राह्मणों द्वारा सतत जाप परायण',
+      'दैनिक जलाभिषेक व भस्म अर्चन',
+      'महाहवन पूर्णाहुति एवं तर्पण'
     ],
-    duration: '3 - 7 Days',
+    duration: '1 से 3 दिन',
     samagriIncluded: true,
     startingPrice: 11000,
-    category: 'Special Jaap',
+    category: 'विशेष जाप अनुष्ठान',
     isMukhya: true,
     faqs: [
       {
-        question: 'How many Pandits participate?',
-        answer: 'Usually 3 to 5 Veda Pandits chant simultaneously based on the total count.'
+        question: 'जाप में कितने पंडित जी भाग लेते हैं?',
+        answer: 'जाप की संख्या के अनुसार 3 से 5 सिद्ध वैदिक ब्राह्मण सतत पाठ करते हैं।'
       }
     ]
   }
