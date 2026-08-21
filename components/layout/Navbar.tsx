@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, Flame, ChevronDown, Sparkles } from 'lucide-react';
+import { Menu, X, Phone, ChevronDown, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { poojaService } from '../../services/poojaService';
 import { Pooja } from '../../types';
@@ -59,10 +59,10 @@ export const Navbar: React.FC = () => {
       }`}
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-10 flex items-center justify-between">
-        {/* Brand Logo - Extreme Left Corner */}
+        {/* Brand Logo - Sacred Om Symbol */}
         <Link href="/" className="flex items-center gap-2 group shrink-0 mr-4 xl:mr-8">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-saffron-gradient flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-            <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-saffron-gradient flex items-center justify-center shadow-md group-hover:scale-105 transition-transform text-white font-bold text-lg leading-none border border-amber-300/40">
+            ॐ
           </div>
           <div>
             <span className={`heading-spiritual text-base sm:text-xl xl:text-2xl font-bold tracking-tight block leading-none ${isScrolled ? 'text-[#7a1f1f]' : 'text-amber-300'}`}>
@@ -74,7 +74,7 @@ export const Navbar: React.FC = () => {
           </div>
         </Link>
 
-        {/* Center Nav Links with Balanced Spacing */}
+        {/* Center Nav Links */}
         <nav className="hidden lg:flex items-center gap-4 xl:gap-6 mx-auto">
           <Link
             href="/"
@@ -211,9 +211,8 @@ export const Navbar: React.FC = () => {
           </Link>
         </nav>
 
-        {/* Right Corner: Call Number + WhatsApp Button + Book Pooja Button with Spacing */}
+        {/* Right Corner: Call Number + WhatsApp Button + Book Pooja Button */}
         <div className="hidden lg:flex items-center gap-3 shrink-0 ml-4 xl:ml-8">
-          {/* Phone Call Link */}
           <a
             href={`tel:${phoneNumber}`}
             className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full border transition-all ${
@@ -226,7 +225,6 @@ export const Navbar: React.FC = () => {
             <span>+91 98765 43210</span>
           </a>
 
-          {/* WhatsApp Direct Icon Button */}
           <a
             href={`https://wa.me/${whatsAppNumber}?text=${encodeURIComponent('Pranam Pandit Ji, I want to book a pooja ritual in Ujjain.')}`}
             target="_blank"
@@ -240,7 +238,6 @@ export const Navbar: React.FC = () => {
             </svg>
           </a>
 
-          {/* Book Pooja CTA Button */}
           <Link
             href="/contact"
             className="bg-saffron-gradient text-white text-xs font-bold px-4.5 py-2 rounded-full shadow-spiritual hover:shadow-spiritual-hover hover:scale-105 transition-all whitespace-nowrap"

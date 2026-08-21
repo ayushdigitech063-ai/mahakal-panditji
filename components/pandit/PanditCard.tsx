@@ -1,28 +1,38 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Star, MapPin, Award, CheckCircle2, ChevronRight } from 'lucide-react';
 import { Pandit } from '../../types';
-
 import { resolveImageUrl } from '../../lib/api';
 
 interface PanditCardProps {
   pandit: Pandit;
 }
 
+const DEFAULT_PANDIT_IMG = '/images/pandits/pandit1.jpg';
+
 export const PanditCard: React.FC<PanditCardProps> = ({ pandit }) => {
+  const initialUrl = resolveImageUrl(pandit.image, DEFAULT_PANDIT_IMG);
+  const [imgSrc, setImgSrc] = useState<string>(initialUrl);
+
   return (
     <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#eadfce] overflow-hidden shadow-spiritual hover:shadow-spiritual-hover transition-all duration-300 flex flex-col group">
       {/* Image & Badge */}
       <div className="relative h-40 sm:h-64 w-full overflow-hidden bg-amber-950/10">
         <Image
-          src={resolveImageUrl(pandit.image, '/images/pandits/pandit1.jpg')}
+          src={imgSrc}
           alt={pandit.name}
           fill
+          unoptimized={imgSrc.startsWith('http')}
           className="object-cover group-hover:scale-105 transition-transform duration-500"
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+          onError={() => {
+            if (imgSrc !== DEFAULT_PANDIT_IMG) {
+              setImgSrc(DEFAULT_PANDIT_IMG);
+            }
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
         

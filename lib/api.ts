@@ -7,7 +7,7 @@ export const SERVER_ORIGIN =
 /**
  * Universal Image URL resolver helper function.
  * Cleans up legacy hardcoded 'http://localhost:5000' strings stored in DB
- * and replaces them with live production SERVER_ORIGIN.
+ * and fallback gracefully to default local static images if server returns 404 or broken images.
  */
 export const resolveImageUrl = (imagePath?: string, fallback = '/images/pandits/pandit1.jpg'): string => {
   if (!imagePath) return fallback;

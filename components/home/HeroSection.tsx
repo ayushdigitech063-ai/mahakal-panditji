@@ -103,8 +103,8 @@ export default function HeroSection() {
                     transition={{ duration: 0.5 }}
                     className="absolute inset-0 bg-black/75 backdrop-blur-md rounded-full flex flex-col items-center justify-center p-6 sm:p-8 text-center z-30 border-2 border-amber-400/90"
                   >
-                    <div className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-saffron-gradient flex items-center justify-center text-white shadow-xl animate-bounce mb-2">
-                      <Sparkles className="w-5 h-5 sm:w-7 sm:h-7 text-amber-200" />
+                    <div className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-saffron-gradient flex items-center justify-center text-white shadow-xl animate-bounce mb-2 font-bold text-xl sm:text-2xl leading-none border border-amber-300/40">
+                      ॐ
                     </div>
 
                     <h2 className="heading-spiritual text-xl sm:text-4xl font-extrabold text-amber-300 tracking-wide drop-shadow-md">

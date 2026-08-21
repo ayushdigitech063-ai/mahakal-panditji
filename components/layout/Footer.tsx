@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Flame, Phone, Mail, MapPin, ShieldCheck, Heart } from 'lucide-react';
+import { Phone, Mail, MapPin, ShieldCheck, Heart } from 'lucide-react';
 import { SiteSettings } from '../../types';
 
 interface FooterProps {
@@ -24,8 +24,8 @@ export const Footer: React.FC<FooterProps> = ({ settings }) => {
           {/* Brand Info */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-saffron-gradient flex items-center justify-center shadow-md">
-                <Flame className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 rounded-full bg-saffron-gradient flex items-center justify-center shadow-md text-white font-bold text-xl leading-none border border-amber-300/40">
+                ॐ
               </div>
               <span className="heading-spiritual text-2xl font-bold tracking-tight text-amber-300">
                 {siteName}

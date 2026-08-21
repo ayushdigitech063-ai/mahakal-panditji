@@ -12,17 +12,23 @@ import { panditService } from '@/services/panditService';
 import { Pandit } from '@/types';
 import { resolveImageUrl } from '@/lib/api';
 
+const DEFAULT_PANDIT_IMG = '/images/pandits/pandit1.jpg';
+
 export default function PanditDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
   const [pandit, setPandit] = useState<Pandit | null>(null);
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [imgSrc, setImgSrc] = useState<string>(DEFAULT_PANDIT_IMG);
 
   useEffect(() => {
     if (slug) {
       panditService.getPanditBySlug(slug).then((data) => {
         setPandit(data);
+        if (data) {
+          setImgSrc(resolveImageUrl(data.image, DEFAULT_PANDIT_IMG));
+        }
         setLoading(false);
       });
     }
@@ -86,12 +92,13 @@ export default function PanditDetailPage() {
         <div className="bg-white rounded-3xl border border-[#eadfce] p-6 sm:p-10 shadow-spiritual grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden bg-amber-950/10 shadow-md">
             <Image
-              src={resolveImageUrl(pandit.image, '/images/pandits/pandit1.jpg')}
+              src={imgSrc}
               alt={pandit.name}
               fill
               priority
               sizes="(max-width: 768px) 100vw, 33vw"
               className="object-cover"
+              onError={() => setImgSrc(DEFAULT_PANDIT_IMG)}
             />
           </div>
 
@@ -163,7 +170,7 @@ export default function PanditDetailPage() {
           </div>
         </div>
 
-        {/* Content Section Grid: Left (Bio & Specializations & FAQs) & Right (Quick Contact Card) */}
+        {/* Content Section Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
             {/* Short Description Overview Card */}
@@ -208,7 +215,7 @@ export default function PanditDetailPage() {
               </div>
             </div>
 
-            {/* Frequently Asked Questions (Pooja FAQs Accordion) */}
+            {/* Frequently Asked Questions */}
             <div className="bg-white rounded-3xl border border-[#eadfce] p-8 shadow-sm space-y-6">
               <div className="flex items-center gap-2 border-b border-[#eadfce] pb-4">
                 <HelpCircle className="w-6 h-6 text-[#c96b18]" />
@@ -277,7 +284,7 @@ export default function PanditDetailPage() {
             </div>
           </div>
 
-          {/* Right Column: Direct Contact & Booking Quick Card (Form completely removed) */}
+          {/* Right Column: Direct Contact Quick Card */}
           <div className="space-y-6">
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#eadfce] shadow-spiritual space-y-6 sticky top-28">
               <div className="w-12 h-12 rounded-full bg-saffron-gradient flex items-center justify-center shadow-md mx-auto">
