@@ -126,9 +126,9 @@ export const EarthIntroAnimation: React.FC<EarthIntroAnimationProps> = ({ onComp
               initial={{ rotate: -180, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="w-24 h-24 rounded-full bg-saffron-gradient mx-auto flex items-center justify-center shadow-2xl shadow-amber-600/60 border-2 border-amber-300/60"
+              className="w-24 h-24 rounded-full bg-saffron-gradient mx-auto flex items-center justify-center shadow-2xl shadow-amber-600/60 border-2 border-amber-300/60 text-white font-bold text-4xl leading-none"
             >
-              <Flame className="w-12 h-12 text-white animate-pulse" />
+              ॐ
             </motion.div>
 
             <motion.div
