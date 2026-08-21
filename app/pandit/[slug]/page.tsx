@@ -10,7 +10,7 @@ import { Footer } from '../../../components/layout/Footer';
 import { LoadingSpinner } from '../../../components/ui/LoadingSpinner';
 import { panditService } from '@/services/panditService';
 import { Pandit } from '@/types';
-import { SERVER_ORIGIN } from '@/lib/api';
+import { resolveImageUrl } from '@/lib/api';
 
 export default function PanditDetailPage() {
   const params = useParams();
@@ -86,11 +86,7 @@ export default function PanditDetailPage() {
         <div className="bg-white rounded-3xl border border-[#eadfce] p-6 sm:p-10 shadow-spiritual grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           <div className="relative h-72 sm:h-96 rounded-2xl overflow-hidden bg-amber-950/10 shadow-md">
             <Image
-              src={
-                pandit.image?.startsWith('/uploads')
-                  ? `${SERVER_ORIGIN}${pandit.image}`
-                  : (pandit.image || '/images/pandits/pandit1.jpg')
-              }
+              src={resolveImageUrl(pandit.image, '/images/pandits/pandit1.jpg')}
               alt={pandit.name}
               fill
               priority

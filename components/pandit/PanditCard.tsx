@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Star, MapPin, Award, CheckCircle2, ChevronRight } from 'lucide-react';
 import { Pandit } from '../../types';
 
-import { SERVER_ORIGIN } from '../../lib/api';
+import { resolveImageUrl } from '../../lib/api';
 
 interface PanditCardProps {
   pandit: Pandit;
@@ -18,11 +18,7 @@ export const PanditCard: React.FC<PanditCardProps> = ({ pandit }) => {
       {/* Image & Badge */}
       <div className="relative h-64 w-full overflow-hidden bg-amber-950/10">
         <Image
-          src={
-            pandit.image?.startsWith('/uploads')
-              ? `${SERVER_ORIGIN}${pandit.image}`
-              : (pandit.image || '/images/pandits/pandit1.jpg')
-          }
+          src={resolveImageUrl(pandit.image, '/images/pandits/pandit1.jpg')}
           alt={pandit.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"

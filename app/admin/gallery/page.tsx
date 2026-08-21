@@ -7,7 +7,7 @@ import { galleryService, GalleryItem } from '@/services/galleryService';
 import { apiClient } from '@/lib/apiClient';
 import { showAlert } from '@/lib/swal';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import { SERVER_ORIGIN } from '@/lib/api';
+import { resolveImageUrl } from '@/lib/api';
 export default function AdminGalleryPage() {
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -124,7 +124,7 @@ export default function AdminGalleryPage() {
             <div key={item._id} className="bg-white rounded-3xl border border-[#eadfce] overflow-hidden shadow-sm hover:shadow-md transition-all group relative">
               <div className="relative h-48 w-full bg-amber-950/10">
                 <Image
-                  src={item.image.startsWith('/uploads') ? `${SERVER_ORIGIN}${item.image}` : item.image}
+                  src={resolveImageUrl(item.image)}
                   alt={item.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -215,6 +215,22 @@ export default function AdminGalleryPage() {
                     <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
                   </label>
                 </div>
+                {/* Live Image Preview Thumbnail */}
+                {formData.image && (
+                  <div className="mt-2 flex items-center gap-3 bg-[#fffaf2] p-2 rounded-2xl border border-[#eadfce]">
+                    <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-[#eadfce] bg-amber-950/10 shrink-0">
+                      <Image
+                        src={resolveImageUrl(formData.image)}
+                        alt="Preview"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <span className="text-[11px] text-[#75695d] font-medium truncate">
+                      Preview: {formData.image}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t border-[#eadfce]">

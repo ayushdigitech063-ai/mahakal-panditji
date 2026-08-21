@@ -8,7 +8,7 @@ import { apiClient } from '@/lib/apiClient';
 import { Pandit } from '@/types';
 import { showAlert } from '@/lib/swal';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import { SERVER_ORIGIN } from '@/lib/api';
+import { resolveImageUrl } from '@/lib/api';
 
 export default function AdminPanditsPage() {
   const [pandits, setPandits] = useState<Pandit[]>([]);
@@ -225,7 +225,7 @@ export default function AdminPanditsPage() {
                     <td className="py-3 px-4">
                       <div className="relative w-10 h-10 rounded-full overflow-hidden border border-[#eadfce] bg-amber-950/10">
                         <Image 
-                          src={p.image?.startsWith('/uploads') ? `${SERVER_ORIGIN}${p.image}` : (p.image || '/images/pandits/pandit1.jpg')} 
+                          src={resolveImageUrl(p.image, '/images/pandits/pandit1.jpg')} 
                           alt={p.name} 
                           fill 
                           className="object-cover"
@@ -337,6 +337,22 @@ export default function AdminPanditsPage() {
                     <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
                   </label>
                 </div>
+                {/* Live Image Preview Thumbnail */}
+                {formData.image && (
+                  <div className="mt-2 flex items-center gap-3 bg-[#fffaf2] p-2 rounded-2xl border border-[#eadfce]">
+                    <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-[#eadfce] bg-amber-950/10 shrink-0">
+                      <Image
+                        src={resolveImageUrl(formData.image)}
+                        alt="Preview"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <span className="text-[11px] text-[#75695d] font-medium truncate">
+                      Preview: {formData.image}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
