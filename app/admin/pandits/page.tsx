@@ -8,6 +8,7 @@ import { apiClient } from '@/lib/apiClient';
 import { Pandit } from '@/types';
 import { showAlert } from '@/lib/swal';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { SERVER_ORIGIN } from '@/lib/api';
 
 export default function AdminPanditsPage() {
   const [pandits, setPandits] = useState<Pandit[]>([]);
@@ -224,7 +225,7 @@ export default function AdminPanditsPage() {
                     <td className="py-3 px-4">
                       <div className="relative w-10 h-10 rounded-full overflow-hidden border border-[#eadfce] bg-amber-950/10">
                         <Image 
-                          src={p.image?.startsWith('/uploads') ? `http://localhost:5000${p.image}` : (p.image || '/images/pandits/pandit1.jpg')} 
+                          src={p.image?.startsWith('/uploads') ? `${SERVER_ORIGIN}${p.image}` : (p.image || '/images/pandits/pandit1.jpg')} 
                           alt={p.name} 
                           fill 
                           className="object-cover"
