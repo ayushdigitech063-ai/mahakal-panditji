@@ -36,7 +36,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[85vh] sm:min-h-[92vh] flex items-center justify-center overflow-hidden bg-spiritual-gradient text-white">
+    <section className="relative w-full min-h-[80vh] sm:min-h-screen flex flex-col justify-center overflow-hidden bg-spiritual-gradient text-white pt-24 sm:pt-28 pb-10 sm:pb-16">
       {/* Earth Intro Animation - RUNS EXACTLY 1 TIME PER USER SESSION */}
       <AnimatePresence>
         {showEarthIntro && (
@@ -143,13 +143,13 @@ export default function HeroSection() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24 text-center flex flex-col items-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-auto text-center flex flex-col items-center">
         {/* Eyebrow with Ujjain Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2 bg-amber-500/30 backdrop-blur-md border border-amber-400/50 px-3.5 py-1.5 rounded-full text-xs md:text-sm font-semibold text-amber-200 mb-5 sm:mb-6 shadow-xl"
+          className="inline-flex items-center gap-2 bg-amber-500/30 backdrop-blur-md border border-amber-400/50 px-3.5 py-1.5 rounded-full text-xs md:text-sm font-semibold text-amber-200 mb-4 sm:mb-6 shadow-xl"
         >
           <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 animate-pulse shrink-0" />
           <span>उज्जैन महाकाल — प्रामाणिक वैदिक पूजा केंद्र</span>
@@ -160,7 +160,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="heading-spiritual text-2xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-amber-50 leading-snug sm:leading-tight mb-4 sm:mb-6 drop-shadow-lg"
+          className="heading-spiritual text-2xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-amber-50 leading-snug sm:leading-tight mb-3 sm:mb-6 drop-shadow-lg"
         >
           उज्जैन महाकाल धाम में पाएं प्रामाणिक <span className="text-amber-400 font-serif italic">पंडित जी</span> से सिद्ध पूजन एवं दोष निवारण
         </motion.h1>
@@ -170,31 +170,33 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="max-w-3xl text-xs sm:text-lg md:text-xl text-amber-100/95 mb-8 sm:mb-10 leading-relaxed font-normal drop-shadow-md"
+          className="max-w-3xl text-xs sm:text-lg md:text-xl text-amber-100/95 mb-6 sm:mb-10 leading-relaxed font-normal drop-shadow-md"
         >
           गुरुदेव पंडित जी द्वारा सिद्ध वैदिक मंत्रोच्चार के साथ काल सर्प दोष, रुद्राभिषेक, मंगल भात पूजा एवं ग्रह शांति अनुष्ठान कराएं।
         </motion.p>
 
-        {/* Action Buttons: Single Line Grid on Mobile */}
+        {/* Action Buttons: 2 in Top Line + 1 Below */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-row items-center justify-center sm:gap-4 w-full sm:w-auto max-w-md sm:max-w-none"
+          className="w-full max-w-md mx-auto space-y-2.5 sm:space-y-0 sm:flex sm:flex-row items-center justify-center sm:gap-4"
         >
-          <Link
-            href="/pandits"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-saffron-gradient text-white px-3 sm:px-8 py-3 sm:py-4 rounded-2xl sm:rounded-full font-bold text-xs sm:text-base shadow-spiritual hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-amber-300/40 text-center"
-          >
-            <span>पंडित जी खोजें</span>
-            <ArrowRight className="w-4 h-4 shrink-0" />
-          </Link>
-          <Link
-            href="/pooja"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-1 bg-black/40 hover:bg-black/60 backdrop-blur-md text-amber-100 px-3 sm:px-8 py-3 sm:py-4 rounded-2xl sm:rounded-full font-semibold text-xs sm:text-base transition-all duration-300 border border-white/30 hover:border-amber-400 text-center"
-          >
-            <span>पूजन अनुष्ठान देखें</span>
-          </Link>
+          <div className="grid grid-cols-2 gap-2.5 w-full sm:w-auto">
+            <Link
+              href="/pandits"
+              className="inline-flex items-center justify-center gap-1 bg-saffron-gradient text-white px-3 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-full font-bold text-xs sm:text-base shadow-spiritual hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-amber-300/40 text-center truncate"
+            >
+              <span>पंडित जी खोजें</span>
+              <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+            </Link>
+            <Link
+              href="/pooja"
+              className="inline-flex items-center justify-center gap-1 bg-black/40 hover:bg-black/60 backdrop-blur-md text-amber-100 px-3 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-full font-semibold text-xs sm:text-base transition-all duration-300 border border-white/30 hover:border-amber-400 text-center truncate"
+            >
+              <span>पूजन अनुष्ठान</span>
+            </Link>
+          </div>
         </motion.div>
 
         {/* Trust Badges */}
@@ -202,18 +204,18 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-amber-500/30 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 text-xs sm:text-sm text-amber-100 w-full max-w-3xl font-medium drop-shadow"
+          className="mt-8 sm:mt-14 pt-5 sm:pt-8 border-t border-amber-500/30 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-6 text-xs sm:text-sm text-amber-100 w-full max-w-3xl font-medium drop-shadow"
         >
           <div className="flex items-center justify-start sm:justify-center gap-3 bg-black/30 p-2.5 sm:p-3 rounded-2xl border border-amber-500/20 backdrop-blur-sm">
-            <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0" />
+            <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
             <span>100% प्रामाणिक विद्वान पंडित</span>
           </div>
           <div className="flex items-center justify-start sm:justify-center gap-3 bg-black/30 p-2.5 sm:p-3 rounded-2xl border border-amber-500/20 backdrop-blur-sm">
-            <Award className="w-5 h-5 text-amber-400 shrink-0" />
+            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
             <span>25,000+ संतुष्ट यजमान</span>
           </div>
           <div className="flex items-center justify-start sm:justify-center gap-3 bg-black/30 p-2.5 sm:p-3 rounded-2xl border border-amber-500/20 backdrop-blur-sm">
-            <Heart className="w-5 h-5 text-amber-400 shrink-0" />
+            <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
             <span>20+ वर्षों का वैदिक अनुभव</span>
           </div>
         </motion.div>
