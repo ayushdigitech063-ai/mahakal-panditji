@@ -59,6 +59,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       });
   }, [pathname, isLoginPage, router]);
 
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
+
   const handleLogout = async () => {
     const confirm = await showAlert.confirm('Logout Confirmation', 'Are you sure you want to sign out?');
     if (confirm.isConfirmed) {
@@ -96,19 +101,39 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="min-h-screen flex bg-[#fffaf2] text-[#2b2118]">
-      {/* Sidebar Desktop */}
-      <aside className="hidden lg:flex flex-col w-64 bg-spiritual-gradient text-[#eadfce] border-r border-amber-950/40 fixed inset-y-0 z-30">
-        <div className="p-6 border-b border-amber-900/40 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-saffron-gradient flex items-center justify-center shadow-md">
-            <Flame className="w-5 h-5 text-white" />
+    <div className="min-h-screen flex bg-[#fffaf2] text-[#2b2118] relative">
+      {/* Mobile Backdrop Drawer Overlay */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs lg:hidden"
+        />
+      )}
+
+      {/* Sidebar Desktop & Mobile */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex flex-col w-64 bg-spiritual-gradient text-[#eadfce] border-r border-amber-950/40 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="p-6 border-b border-amber-900/40 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-saffron-gradient flex items-center justify-center shadow-md">
+              <Flame className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <span className="heading-spiritual text-lg font-bold text-amber-300 block leading-tight">
+                Mahakal CMS
+              </span>
+              <span className="text-[10px] text-amber-200/60 uppercase tracking-widest block">Super Admin</span>
+            </div>
           </div>
-          <div>
-            <span className="heading-spiritual text-lg font-bold text-amber-300 block leading-tight">
-              Mahakal CMS
-            </span>
-            <span className="text-[10px] text-amber-200/60 uppercase tracking-widest block">Super Admin</span>
-          </div>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden text-amber-200 hover:text-white p-1"
+          >
+            <X className="w-6 h-6" />
+          </button>
         </div>
 
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
@@ -149,8 +174,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <header className="bg-white border-b border-[#eadfce] py-4 px-6 sticky top-0 z-20 flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-4">
             <button
+              type="button"
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 rounded-lg border border-[#eadfce] text-[#2b2118]"
+              className="lg:hidden p-2 rounded-xl border border-[#eadfce] text-[#7a1f1f] bg-[#fffaf2] hover:bg-amber-100 transition-colors"
             >
               {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>

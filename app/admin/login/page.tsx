@@ -4,7 +4,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useRouter } from 'next/navigation';
 import { Lock, Mail, ShieldCheck, Flame, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { apiClient } from '../../../lib/apiClient';
@@ -19,7 +18,6 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -44,7 +42,8 @@ export default function AdminLoginPage() {
       if (res.success && res.data.token) {
         localStorage.setItem('admin_token', res.data.token);
         await showAlert.success('Login Successful', 'Welcome to Mahakal Pandit CMS');
-        router.push('/admin');
+        // Force full page navigation to ensure auth headers and admin layout load freshly
+        window.location.href = '/admin';
       } else {
         await showAlert.error('Login Failed', res.message || 'Invalid credentials');
       }
