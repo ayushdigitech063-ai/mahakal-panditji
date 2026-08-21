@@ -1,70 +1,93 @@
 import { API_BASE_URL } from './api';
 
 interface RequestOptions extends RequestInit {
-  params?: Record<string, string | number>;
+  data?: any;
 }
 
-async function request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
-  const { params, headers, ...restOptions } = options;
+class ApiClient {
+  private baseUrl: string;
 
-  let url = `${API_BASE_URL.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
-
-  if (params) {
-    const searchParams = new URLSearchParams();
-    Object.entries(params).forEach(([key, value]) => {
-      searchParams.append(key, String(value));
-    });
-    url += `?${searchParams.toString()}`;
+  constructor() {
+    this.baseUrl = API_BASE_URL;
   }
 
-  const defaultHeaders = {
-    'Content-Type': 'application/json',
-    ...headers,
-  };
+  private getToken(): string | null {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('admin_token');
+    }
+    return null;
+  }
 
-  try {
-    const response = await fetch(url, {
-      headers: defaultHeaders,
-      ...restOptions,
-    });
+  private async request<T = any>(endpoint: string, options: RequestOptions = {}): Promise<T> {
+    const { data, headers: customHeaders, ...customOptions } = options;
+    const token = this.getToken();
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ message: 'API request failed' }));
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...(customHeaders as Record<string, string>),
+    };
+
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
     }
 
-    return await response.json();
-  } catch (error) {
-    console.warn(`[ApiClient] API Call failed to ${url}, error:`, error);
-    throw error;
+    const config: RequestInit = {
+      ...customOptions,
+      headers,
+    };
+
+    if (data && !(data instanceof FormData)) {
+      config.body = JSON.stringify(data);
+    } else if (data instanceof FormData) {
+      delete headers['Content-Type']; // Let browser set boundary
+      config.body = data;
+    }
+
+    const response = await fetch(`${this.baseUrl}${endpoint}`, config);
+
+    let responseData;
+    try {
+      responseData = await response.json();
+    } catch {
+      responseData = { success: false, message: 'Server returned an invalid response' };
+    }
+
+    if (!response.ok) {
+      if (response.status === 401 && typeof window !== 'undefined' && endpoint.startsWith('/admin')) {
+        localStorage.removeItem('admin_token');
+        window.location.href = '/admin/login';
+      }
+      throw new Error(responseData.message || 'API request failed');
+    }
+
+    return responseData;
+  }
+
+  public get<T = any>(endpoint: string, options?: RequestOptions): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'GET' });
+  }
+
+  public post<T = any>(endpoint: string, data?: any, options?: RequestOptions): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'POST', data });
+  }
+
+  public put<T = any>(endpoint: string, data?: any, options?: RequestOptions): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'PUT', data });
+  }
+
+  public patch<T = any>(endpoint: string, data?: any, options?: RequestOptions): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'PATCH', data });
+  }
+
+  public delete<T = any>(endpoint: string, options?: RequestOptions): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+  }
+
+  public async upload<T = any>(folder: string, file: File): Promise<T> {
+    const formData = new FormData();
+    formData.append('image', file);
+    return this.post<T>(`/uploads/${folder}`, formData);
   }
 }
 
-export const apiClient = {
-  get: <T>(endpoint: string, options?: RequestOptions) =>
-    request<T>(endpoint, { ...options, method: 'GET' }),
-
-  post: <T>(endpoint: string, data?: unknown, options?: RequestOptions) =>
-    request<T>(endpoint, {
-      ...options,
-      method: 'POST',
-      body: data ? JSON.stringify(data) : undefined,
-    }),
-
-  put: <T>(endpoint: string, data?: unknown, options?: RequestOptions) =>
-    request<T>(endpoint, {
-      ...options,
-      method: 'PUT',
-      body: data ? JSON.stringify(data) : undefined,
-    }),
-
-  patch: <T>(endpoint: string, data?: unknown, options?: RequestOptions) =>
-    request<T>(endpoint, {
-      ...options,
-      method: 'PATCH',
-      body: data ? JSON.stringify(data) : undefined,
-    }),
-
-  delete: <T>(endpoint: string, options?: RequestOptions) =>
-    request<T>(endpoint, { ...options, method: 'DELETE' }),
-};
+export const apiClient = new ApiClient();

@@ -1,11 +1,6 @@
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, Inter } from 'next/font/google';
 import './globals.css';
-import AnnouncementBar from '@/components/layout/AnnouncementBar';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import FloatingActionButtons from '@/components/ui/FloatingActionButtons';
-import { LanguageProvider } from '@/context/LanguageContext';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -21,9 +16,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'महाकाल पंडित | उज्जैन सिद्ध पूजन एवं पंडित बुकिंग केंद्र',
+  title: 'Mahakal Pandit — Book Authentic Ujjain Pooja & Pandits Online',
   description:
-    'उज्जैन महाकालेश्वर धाम में काल सर्प दोष, रुद्राभिषेक, भात पूजा एवं ग्रह शांति अनुष्ठान हेतु प्रामाणिक विद्वान पंडित जी बुकिंग।',
+    'Book verified Pandits for Mahakal Rudrabhishek, Kaal Sarp Dosh Pooja, Mangal Dosh Nivaran, and Navgraha Shanti in Ujjain.',
 };
 
 export default function RootLayout({
@@ -32,15 +27,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="hi" className={`${cormorant.variable} ${inter.variable}`}>
-      <body className="min-h-screen flex flex-col bg-[#fffaf2] text-[#2b2118]">
-        <LanguageProvider>
-          <AnnouncementBar />
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-          <FloatingActionButtons />
-        </LanguageProvider>
+    <html lang="en" data-scroll-behavior="smooth" className={`${cormorant.variable} ${inter.variable}`}>
+      <body className="min-h-screen flex flex-col bg-[#fffaf2] text-[#2b2118] antialiased">
+        {children}
       </body>
     </html>
   );

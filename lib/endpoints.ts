@@ -1,8 +1,29 @@
 export const ENDPOINTS = {
+  auth: {
+    login: '/auth/login',
+    me: '/auth/me',
+    logout: '/auth/logout',
+  },
   pandits: '/pandits',
   poojas: '/poojas',
   blogs: '/blogs',
-  contact: '/contact',
   reviews: '/reviews',
-  festivals: '/festivals'
+  festivals: '/festivals',
+  homepage: '/homepage',
+  settings: '/settings',
+  gallery: '/gallery',
+  enquiries: '/enquiries',
+  uploads: '/uploads',
+  admin: {
+    dashboard: '/admin/dashboard',
+    pandits: '/admin/pandits',
+    poojas: '/admin/poojas',
+    blogs: '/admin/blogs',
+    reviews: '/admin/reviews',
+    festivals: '/admin/festivals',
+    enquiries: '/admin/enquiries',
+    homepage: '/admin/homepage',
+    settings: '/admin/settings',
+    gallery: '/admin/gallery',
+  },
 };

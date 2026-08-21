@@ -1,23 +1,48 @@
-import { Pandit } from '@/types/pandit';
-import { SEEDED_PANDITS } from '@/data/pandits';
-import { apiClient } from '@/lib/apiClient';
-import { ENDPOINTS } from '@/lib/endpoints';
+import { apiClient } from '../lib/apiClient';
+import { ENDPOINTS } from '../lib/endpoints';
+import { Pandit, ApiResponse } from '../types';
 
-export async function getPandits(): Promise<Pandit[]> {
-  try {
-    const data = await apiClient.get<Pandit[]>(ENDPOINTS.pandits);
-    return data;
-  } catch {
-    // Fallback to seeded data when backend API is unavailable
-    return SEEDED_PANDITS;
-  }
-}
+export const panditService = {
+  getPandits: async (): Promise<Pandit[]> => {
+    try {
+      const res = await apiClient.get<ApiResponse<Pandit[]>>(ENDPOINTS.pandits);
+      return res.data || [];
+    } catch {
+      return [];
+    }
+  },
 
-export async function getPanditBySlug(slug: string): Promise<Pandit | undefined> {
-  try {
-    const data = await apiClient.get<Pandit>(`${ENDPOINTS.pandits}/${slug}`);
-    return data;
-  } catch {
-    return SEEDED_PANDITS.find((p) => p.slug === slug);
-  }
-}
+  getPanditBySlug: async (slug: string): Promise<Pandit | null> => {
+    try {
+      const res = await apiClient.get<ApiResponse<Pandit>>(`${ENDPOINTS.pandits}/${slug}`);
+      return res.data || null;
+    } catch {
+      return null;
+    }
+  },
+
+  // Admin Methods
+  getAdminPandits: async (query: string = ''): Promise<Pandit[]> => {
+    const res = await apiClient.get<ApiResponse<Pandit[]>>(`${ENDPOINTS.admin.pandits}${query}`);
+    return res.data || [];
+  },
+
+  createPandit: async (data: Partial<Pandit>): Promise<Pandit> => {
+    const res = await apiClient.post<ApiResponse<Pandit>>(ENDPOINTS.admin.pandits, data);
+    return res.data;
+  },
+
+  updatePandit: async (id: string, data: Partial<Pandit>): Promise<Pandit> => {
+    const res = await apiClient.put<ApiResponse<Pandit>>(`${ENDPOINTS.admin.pandits}/${id}`, data);
+    return res.data;
+  },
+
+  togglePanditStatus: async (id: string): Promise<Pandit> => {
+    const res = await apiClient.patch<ApiResponse<Pandit>>(`${ENDPOINTS.admin.pandits}/${id}/status`);
+    return res.data;
+  },
+
+  deletePandit: async (id: string): Promise<void> => {
+    await apiClient.delete(`${ENDPOINTS.admin.pandits}/${id}`);
+  },
+};

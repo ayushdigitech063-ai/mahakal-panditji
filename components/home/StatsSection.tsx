@@ -1,68 +1,65 @@
 'use client';
 
 import React from 'react';
-import { Users, Flame, Building2, Star } from 'lucide-react';
-import { SEEDED_STATS } from '@/data/reviews';
-import AnimatedCounter from '@/components/ui/AnimatedCounter';
+import { motion } from 'framer-motion';
+import { UserCheck, Flame, MapPin, Star } from 'lucide-react';
+import { HomepageSettings } from '../../types';
 
-export default function StatsSection() {
-  const stats = [
-    {
-      icon: Users,
-      value: SEEDED_STATS.experiencedPandits,
-      suffix: '+',
-      label: 'विद्वान पंडित जी',
-      sublabel: 'गुरुकुल शिक्षित',
-    },
-    {
-      icon: Flame,
-      value: SEEDED_STATS.poojasPerformed,
-      suffix: '+',
-      label: 'संपन्न अनुष्ठान',
-      sublabel: 'उज्जैन महाकाल धाम',
-    },
-    {
-      icon: Building2,
-      value: SEEDED_STATS.citiesServed,
-      suffix: '+',
-      label: 'शहरों में यजमान',
-      sublabel: 'देश-विदेश',
-    },
-    {
-      icon: Star,
-      value: SEEDED_STATS.rating,
-      decimals: 1,
-      suffix: ' / 5',
-      label: 'यजमान रेटिंग',
-      sublabel: 'संतुष्ट भक्तजन',
-    },
+interface StatsSectionProps {
+  stats?: HomepageSettings['stats'];
+}
+
+export const StatsSection: React.FC<StatsSectionProps> = ({ stats }) => {
+  const defaultStats = [
+    { number: '500+', label: 'Experienced Pandits', iconName: 'UserCheck', isVisible: true },
+    { number: '10K+', label: 'Pooja Performed', iconName: 'Flame', isVisible: true },
+    { number: '50+', label: 'Cities Served', iconName: 'MapPin', isVisible: true },
+    { number: '4.9/5', label: 'Customer Rating', iconName: 'Star', isVisible: true },
   ];
 
+  const items = (stats && stats.length > 0 ? stats : defaultStats).filter((s) => s.isVisible);
+
+  const getIcon = (name: string) => {
+    switch (name) {
+      case 'UserCheck':
+        return <UserCheck className="w-8 h-8 text-[#c96b18]" />;
+      case 'Flame':
+        return <Flame className="w-8 h-8 text-[#c96b18]" />;
+      case 'MapPin':
+        return <MapPin className="w-8 h-8 text-[#c96b18]" />;
+      case 'Star':
+        return <Star className="w-8 h-8 text-[#c96b18]" />;
+      default:
+        return <Flame className="w-8 h-8 text-[#c96b18]" />;
+    }
+  };
+
   return (
-    <section className="relative z-20 -mt-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-[#fffaf2] border border-[#eadfce] rounded-3xl p-6 sm:p-8 shadow-2xl grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 divide-y lg:divide-y-0 lg:divide-x divide-[#eadfce]">
-        {stats.map((stat, index) => {
-          const Icon = stat.icon;
-          return (
-            <div
-              key={index}
-              className={`flex flex-col items-center text-center ${
-                index > 0 ? 'pt-6 lg:pt-0' : ''
-              }`}
+    <section className="py-12 bg-white border-y border-[#eadfce] relative z-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {items.map((stat, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="p-6 rounded-2xl bg-[#fffaf2] border border-[#eadfce] shadow-sm hover:shadow-md transition-shadow flex flex-col items-center justify-center space-y-3"
             >
-              <div className="w-12 h-12 rounded-2xl bg-[#c96b18]/10 flex items-center justify-center text-[#c96b18] mb-3">
-                <Icon className="w-6 h-6" />
+              <div className="p-3 rounded-xl bg-amber-50 border border-amber-200/60">
+                {getIcon(stat.iconName)}
               </div>
-              <div className="heading-spiritual text-3xl sm:text-4xl font-bold text-[#8f3f12]">
-                <AnimatedCounter value={stat.value} decimals={stat.decimals || 0} />
-                <span>{stat.suffix}</span>
-              </div>
-              <p className="text-sm font-bold text-[#2b2118] mt-1">{stat.label}</p>
-              <p className="text-xs text-[#75695d] mt-0.5">{stat.sublabel}</p>
-            </div>
-          );
-        })}
+              <span className="heading-spiritual text-3xl sm:text-4xl font-extrabold text-[#7a1f1f] block">
+                {stat.number}
+              </span>
+              <span className="text-xs sm:text-sm font-semibold text-[#75695d] uppercase tracking-wider block">
+                {stat.label}
+              </span>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
-}
+};

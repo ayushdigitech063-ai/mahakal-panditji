@@ -1,123 +1,85 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShieldCheck, Heart, Users, Award, Sparkles, ArrowRight } from 'lucide-react';
-import SectionHeading from '@/components/ui/SectionHeading';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'About Mahakal Pandit | Trusted Spiritual Services in Ujjain',
-  description:
-    'Learn about Mahakal Pandit mission to bridge devotees worldwide with certified Veda Pandits for authentic rituals at Mahakaleshwar Dham.',
-};
+import { Flame, ShieldCheck, Award, Heart, CheckCircle2 } from 'lucide-react';
+import { Navbar } from '../../components/layout/Navbar';
+import { Footer } from '../../components/layout/Footer';
 
 export default function AboutPage() {
   return (
-    <div className="bg-[#fffaf2] min-h-screen py-12 space-y-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeading
-          eyebrow="Our Sacred Purpose"
-          title="Preserving & Serving Authentic Vedic Traditions"
-          subtitle="Connecting Mahakal devotees globally with certified Gurukul Pandits for authentic, scriptures-guided Hindu rituals in Ujjain."
-        />
+    <div className="min-h-screen flex flex-col bg-[#fffaf2]">
+      <Navbar />
 
-        {/* Hero Image & Story */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          <div className="lg:col-span-6 relative h-96 rounded-3xl overflow-hidden shadow-xl border border-[#eadfce]">
-            <Image
-              src="https://images.unsplash.com/photo-1609102026400-3d0817730704?auto=format&fit=crop&w=800&q=80"
-              alt="Mahakal Temple Ujjain Sanctum"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
+      <main className="flex-1 pt-32 pb-20">
+        {/* About Hero */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 mb-16">
+          <span className="text-xs font-bold uppercase tracking-widest text-[#c96b18]">
+            Sacred Heritage of Ujjain
+          </span>
+          <h1 className="heading-spiritual text-3xl sm:text-5xl font-extrabold text-[#7a1f1f]">
+            Connecting Devotees With Eternal Vedic Traditions
+          </h1>
+          <p className="text-base sm:text-lg text-[#75695d] max-w-3xl mx-auto leading-relaxed">
+            Mahakal Pandit is Ujjain's premier priest booking platform dedicated to providing authentic, transparent, and devout spiritual services for pilgrims across the globe.
+          </p>
+        </section>
 
-          <div className="lg:col-span-6 space-y-6">
-            <span className="text-xs uppercase tracking-widest font-semibold text-[#c96b18] bg-[#c96b18]/10 px-3 py-1 rounded-full inline-block">
-              Our Journey
-            </span>
-            <h2 className="heading-spiritual text-3xl font-bold text-[#8f3f12]">
-              Rooted in the Holy Sanctum of Avantika (Ujjain)
+        {/* Mission & Story Grid */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+          <div className="space-y-6">
+            <h2 className="heading-spiritual text-3xl font-bold text-[#7a1f1f]">
+              Our Sacred Mission
             </h2>
-            <p className="text-sm text-[#75695d] leading-relaxed">
-              Mahakal Pandit was established with a singular devotion: to eliminate chaos and lack of transparency when devotees seek authentic Pandits for sacred rituals in Ujjain.
+            <p className="text-sm text-[#2b2118] leading-relaxed">
+              For generations, Ujjain has been revered as Avanti Puri — the holy city of Lord Mahakaleshwar where cosmic time is calculated and planetary doshas are resolved. Our mission is to safeguard the scriptural sanctity of Karma Kanda rituals while offering seamless digital access for devotees.
             </p>
-            <p className="text-sm text-[#75695d] leading-relaxed">
-              Whether you are travelling to Mahakaleshwar Dham for Kaal Sarp Dosh Shanti or booking online Rudrabhishek from the comfort of your home, our platform guarantees Gurukul-verified Veda Pandits who strictly adhere to classical Shastras.
-            </p>
-
-            <div className="pt-4 flex items-center gap-4">
-              <Link
-                href="/pandits"
-                className="bg-saffron-gradient text-white text-xs font-bold px-6 py-3 rounded-full shadow-spiritual hover:scale-105 transition-all flex items-center gap-2"
-              >
-                <span>Meet Our Pandits</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <CheckCircle2 className="w-5 h-5 text-[#c96b18]" />
+                <span className="text-sm font-semibold text-[#2b2118]">Strict Verification of Priest Lineage & Degrees</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle2 className="w-5 h-5 text-[#c96b18]" />
+                <span className="text-sm font-semibold text-[#2b2118]">Transparent Fixed Dakshina without Middlemen</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle2 className="w-5 h-5 text-[#c96b18]" />
+                <span className="text-sm font-semibold text-[#2b2118]">Pure Samagri & Ritual Sanitation Assurance</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Why Choose Us */}
-        <div className="pt-16">
-          <SectionHeading
-            eyebrow="Devotee Trust"
-            title="Why Choose Mahakal Pandit?"
-            subtitle="We uphold uncompromising standards of spiritual purity, transparency, and authentic Vedic recitation."
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white border border-[#eadfce] rounded-3xl p-6 shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#c96b18]/10 flex items-center justify-center text-[#c96b18]">
-                <ShieldCheck className="w-6 h-6" />
+          <div className="bg-white p-8 rounded-3xl border border-[#eadfce] shadow-spiritual space-y-6">
+            <h3 className="heading-spiritual text-2xl font-bold text-[#7a1f1f]">
+              Why Choose Mahakal Pandit?
+            </h3>
+            <div className="space-y-4">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-amber-100 rounded-2xl text-[#c96b18]">
+                  <Award className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-base text-[#2b2118]">Gold Medalist Scholars</h4>
+                  <p className="text-xs text-[#75695d]">Our Pandits are educated at renowned Sanskrit Universities in Kashi & Ujjain.</p>
+                </div>
               </div>
-              <h3 className="heading-spiritual text-xl font-bold text-[#8f3f12]">
-                100% Certified Pandits
-              </h3>
-              <p className="text-xs text-[#75695d] leading-relaxed">
-                Every Pandit Ji registered on our platform is verified for Gurukul education, Veda Parayan mastery, and years of experience.
-              </p>
-            </div>
-
-            <div className="bg-white border border-[#eadfce] rounded-3xl p-6 shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#c96b18]/10 flex items-center justify-center text-[#c96b18]">
-                <Award className="w-6 h-6" />
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-amber-100 rounded-2xl text-[#c96b18]">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-base text-[#2b2118]">Guaranteed Vidhi Purity</h4>
+                  <p className="text-xs text-[#75695d]">Every mantra chant and havan ahuti is conducted as prescribed in ancient Granthas.</p>
+                </div>
               </div>
-              <h3 className="heading-spiritual text-xl font-bold text-[#8f3f12]">
-                Authentic Samagri
-              </h3>
-              <p className="text-xs text-[#75695d] leading-relaxed">
-                We arrange pristine, pure ritual Samagri including organic Bhasma, pure Desi Ghee, Gangajal, and holy herbs.
-              </p>
-            </div>
-
-            <div className="bg-white border border-[#eadfce] rounded-3xl p-6 shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#c96b18]/10 flex items-center justify-center text-[#c96b18]">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <h3 className="heading-spiritual text-xl font-bold text-[#8f3f12]">
-                Transparent Pricing
-              </h3>
-              <p className="text-xs text-[#75695d] leading-relaxed">
-                No hidden costs or unexpected demands. Clear upfront Dakshina and Samagri package pricing for complete peace of mind.
-              </p>
-            </div>
-
-            <div className="bg-white border border-[#eadfce] rounded-3xl p-6 shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#c96b18]/10 flex items-center justify-center text-[#c96b18]">
-                <Heart className="w-6 h-6" />
-              </div>
-              <h3 className="heading-spiritual text-xl font-bold text-[#8f3f12]">
-                Live Stream Option
-              </h3>
-              <p className="text-xs text-[#75695d] leading-relaxed">
-                Unable to travel? Experience live HD video streaming of your Sankalp and Pooja with Prasad delivered to your doorstep.
-              </p>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
+
+      <Footer />
     </div>
   );
 }
