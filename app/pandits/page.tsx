@@ -64,7 +64,7 @@ export default function PanditsPage() {
             <p className="text-base text-[#75695d]">No Pandits found matching your search criteria.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {filteredPandits.map((pandit) => (
               <PanditCard key={pandit._id} pandit={pandit} />
             ))}
