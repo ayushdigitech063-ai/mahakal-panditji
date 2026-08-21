@@ -36,7 +36,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[80vh] sm:min-h-screen flex flex-col justify-center overflow-hidden bg-spiritual-gradient text-white pt-24 sm:pt-28 pb-10 sm:pb-16">
+    <section className="relative w-full min-h-[85vh] sm:min-h-[92vh] flex flex-col justify-center overflow-hidden bg-spiritual-gradient text-white pt-24 sm:pt-28 pb-10 sm:pb-16">
       {/* Earth Intro Animation - RUNS EXACTLY 1 TIME PER USER SESSION */}
       <AnimatePresence>
         {showEarthIntro && (
@@ -175,48 +175,49 @@ export default function HeroSection() {
           गुरुदेव पंडित जी द्वारा सिद्ध वैदिक मंत्रोच्चार के साथ काल सर्प दोष, रुद्राभिषेक, मंगल भात पूजा एवं ग्रह शांति अनुष्ठान कराएं।
         </motion.p>
 
-        {/* Action Buttons: 2 in Top Line + 1 Below */}
+        {/* Action Buttons: 2 in Top Line */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5 }}
-          className="w-full max-w-md mx-auto space-y-2.5 sm:space-y-0 sm:flex sm:flex-row items-center justify-center sm:gap-4"
+          className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-row items-center justify-center sm:gap-4 w-full max-w-md sm:max-w-none mx-auto"
         >
-          <div className="grid grid-cols-2 gap-2.5 w-full sm:w-auto">
-            <Link
-              href="/pandits"
-              className="inline-flex items-center justify-center gap-1 bg-saffron-gradient text-white px-3 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-full font-bold text-xs sm:text-base shadow-spiritual hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-amber-300/40 text-center truncate"
-            >
-              <span>पंडित जी खोजें</span>
-              <ArrowRight className="w-3.5 h-3.5 shrink-0" />
-            </Link>
-            <Link
-              href="/pooja"
-              className="inline-flex items-center justify-center gap-1 bg-black/40 hover:bg-black/60 backdrop-blur-md text-amber-100 px-3 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-full font-semibold text-xs sm:text-base transition-all duration-300 border border-white/30 hover:border-amber-400 text-center truncate"
-            >
-              <span>पूजन अनुष्ठान</span>
-            </Link>
-          </div>
+          <Link
+            href="/pandits"
+            className="inline-flex items-center justify-center gap-1 bg-saffron-gradient text-white px-3 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-full font-bold text-xs sm:text-base shadow-spiritual hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-amber-300/40 text-center truncate"
+          >
+            <span>पंडित जी खोजें</span>
+            <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+          </Link>
+          <Link
+            href="/pooja"
+            className="inline-flex items-center justify-center gap-1 bg-black/40 hover:bg-black/60 backdrop-blur-md text-amber-100 px-3 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-full font-semibold text-xs sm:text-base transition-all duration-300 border border-white/30 hover:border-amber-400 text-center truncate"
+          >
+            <span>पूजन अनुष्ठान</span>
+          </Link>
         </motion.div>
 
-        {/* Trust Badges */}
+        {/* Trust Badges: 2 Cards in Line 1 + 1 Card in Line 2 on Mobile */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="mt-8 sm:mt-14 pt-5 sm:pt-8 border-t border-amber-500/30 grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-6 text-xs sm:text-sm text-amber-100 w-full max-w-3xl font-medium drop-shadow"
+          className="mt-8 sm:mt-14 pt-5 sm:pt-8 border-t border-amber-500/30 max-w-3xl w-full font-medium drop-shadow space-y-2.5 sm:space-y-0"
         >
-          <div className="flex items-center justify-start sm:justify-center gap-3 bg-black/30 p-2.5 sm:p-3 rounded-2xl border border-amber-500/20 backdrop-blur-sm">
-            <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
-            <span>100% प्रामाणिक विद्वान पंडित</span>
-          </div>
-          <div className="flex items-center justify-start sm:justify-center gap-3 bg-black/30 p-2.5 sm:p-3 rounded-2xl border border-amber-500/20 backdrop-blur-sm">
-            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
-            <span>25,000+ संतुष्ट यजमान</span>
-          </div>
-          <div className="flex items-center justify-start sm:justify-center gap-3 bg-black/30 p-2.5 sm:p-3 rounded-2xl border border-amber-500/20 backdrop-blur-sm">
-            <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
-            <span>20+ वर्षों का वैदिक अनुभव</span>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-6 text-xs sm:text-sm text-amber-100">
+            <div className="flex items-center justify-start sm:justify-center gap-2 bg-black/30 p-2.5 sm:p-3 rounded-2xl border border-amber-500/20 backdrop-blur-sm">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
+              <span className="text-[11px] sm:text-xs">100% प्रामाणिक पंडित</span>
+            </div>
+            <div className="flex items-center justify-start sm:justify-center gap-2 bg-black/30 p-2.5 sm:p-3 rounded-2xl border border-amber-500/20 backdrop-blur-sm">
+              <Award className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
+              <span className="text-[11px] sm:text-xs">25,000+ यजमान</span>
+            </div>
+            {/* 3rd Card: Spans 2 Columns on Mobile (1 Card in 2nd row) */}
+            <div className="col-span-2 sm:col-span-1 flex items-center justify-center gap-2 bg-black/30 p-2.5 sm:p-3 rounded-2xl border border-amber-500/20 backdrop-blur-sm">
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
+              <span className="text-[11px] sm:text-xs">20+ वर्षों का अनुभव</span>
+            </div>
           </div>
         </motion.div>
       </div>
