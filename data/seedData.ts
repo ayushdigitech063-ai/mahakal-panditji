@@ -19,6 +19,7 @@ export const seedPandits: Pandit[] = [
     isVerified: true,
     isActive: true,
   },
+  // oierptu;;;;;hjnsdafjp
   {
     _id: 'p2',
     name: 'Acharya Suresh Shastri',

@@ -15,7 +15,7 @@ export default function AdminBlogsPage() {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingBlog, setEditingBlog] = useState<Blog | null>(null);
-
+// kjweghfdlghsdlfjkghlkjd
   const [formData, setFormData] = useState({
     title: '',
     featuredImage: '/images/blogs/blog1.jpg',
