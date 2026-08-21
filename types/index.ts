@@ -180,3 +180,6 @@ export interface ApiResponse<T = any> {
   data: T;
   errors?: Record<string, string[]>;
 }
+
+export * from './newModules';
+

@@ -16,6 +16,7 @@ import { ReviewsSection } from '../components/home/ReviewsSection';
 import { ContactForm } from '../components/forms/ContactForm';
 import { EarthIntroAnimation } from '../components/intro/EarthIntroAnimation';
 import { LiveGallerySection } from '../components/home/LiveGallerySection';
+import { HomeAccommodationsSlider } from '../components/home/HomeAccommodationsSlider';
 import { FloatingContactWidget } from '../components/ui/FloatingContactWidget';
 import { panditService } from '../services/panditService';
 import { poojaService } from '../services/poojaService';
@@ -168,6 +169,10 @@ export default function HomePage() {
             </div>
           </section>
         )}
+
+        {/* Hotels & Bhakt Niwas Dharmashala Slider */}
+        <HomeAccommodationsSlider />
+
 
         {/* Special Festivals 2026 */}
         <SpecialFestivalSection festivals={festivals} settings={homepageData?.festivalSection} />
