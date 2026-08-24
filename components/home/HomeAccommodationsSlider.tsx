@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import { Building2, Home, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Building2, Home, ArrowRight } from 'lucide-react';
 import { hotelService } from '../../services/hotelService';
 import { HotelCard } from '../hotel/HotelCard';
 import { Hotel } from '../../types';
@@ -42,18 +42,6 @@ export const HomeAccommodationsSlider: React.FC = () => {
 
     return () => clearInterval(interval);
   }, [filtered, isMouseDown]);
-
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-    }
-  };
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
@@ -132,27 +120,6 @@ export const HomeAccommodationsSlider: React.FC = () => {
 
         {/* Mobile: 2 Cards per View | Desktop: 4 Cards per View Grid Slider with 5s Auto-Rotation */}
         <div className="relative">
-          {filtered.length > 4 && (
-            <div className="hidden sm:flex items-center gap-2 absolute -top-14 right-0 z-10">
-              <button
-                type="button"
-                onClick={scrollLeft}
-                className="w-9 h-9 rounded-full bg-white border border-[#eadfce] text-[#7a1f1f] hover:bg-[#c96b18] hover:text-white flex items-center justify-center shadow-sm transition-all"
-                aria-label="Previous Stay"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={scrollRight}
-                className="w-9 h-9 rounded-full bg-white border border-[#eadfce] text-[#7a1f1f] hover:bg-[#c96b18] hover:text-white flex items-center justify-center shadow-sm transition-all"
-                aria-label="Next Stay"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          )}
-
           <div
             ref={scrollRef}
             onMouseDown={handleMouseDown}

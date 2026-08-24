@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { PanditCard } from '../pandit/PanditCard';
 import { Pandit } from '../../types';
 
@@ -35,18 +34,6 @@ export const HomePanditSlider: React.FC<HomePanditSliderProps> = ({ pandits }) =
     return () => clearInterval(interval);
   }, [pandits, isMouseDown]);
 
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-    }
-  };
-
   // Touch / Mouse Drag
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!scrollRef.current) return;
@@ -69,28 +56,6 @@ export const HomePanditSlider: React.FC<HomePanditSliderProps> = ({ pandits }) =
 
   return (
     <div className="relative">
-      {/* Navigation Buttons for Desktop */}
-      {pandits.length > 4 && (
-        <div className="hidden sm:flex items-center gap-2 absolute -top-16 right-0 z-10">
-          <button
-            type="button"
-            onClick={scrollLeft}
-            className="w-10 h-10 rounded-full bg-white border border-[#eadfce] text-[#7a1f1f] hover:bg-[#c96b18] hover:text-white flex items-center justify-center shadow-sm transition-all"
-            aria-label="Previous Pandit"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            type="button"
-            onClick={scrollRight}
-            className="w-10 h-10 rounded-full bg-white border border-[#eadfce] text-[#7a1f1f] hover:bg-[#c96b18] hover:text-white flex items-center justify-center shadow-sm transition-all"
-            aria-label="Next Pandit"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
-      )}
-
       {/* Mobile: 2 Cards per View Grid Slider | Desktop: 4 Cards per View Grid Slider with 5s Auto-Rotation */}
       <div
         ref={scrollRef}
