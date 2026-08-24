@@ -23,13 +23,14 @@ export const HeroBanner: React.FC<HeroProps> = ({ data }) => {
 
   return (
     <section className="relative min-h-[85vh] sm:min-h-screen flex flex-col justify-center pt-24 sm:pt-28 pb-8 sm:pb-16 overflow-hidden bg-spiritual-gradient text-white">
-      {/* Background Media */}
+      {/* Background Media with preload optimization */}
       <div className="absolute inset-0 z-0 opacity-75">
         <video
           autoPlay
           muted
           loop
           playsInline
+          preload="metadata"
           className="w-full h-full object-cover"
         >
           <source src={data?.videoUrl || '/videos/hero.mp4'} type="video/mp4" />
@@ -42,7 +43,7 @@ export const HeroBanner: React.FC<HeroProps> = ({ data }) => {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] sm:text-sm font-medium backdrop-blur-md"
         >
           <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-300 shrink-0" />
@@ -50,18 +51,18 @@ export const HeroBanner: React.FC<HeroProps> = ({ data }) => {
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           className="heading-spiritual text-2xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-amber-100 leading-snug sm:leading-tight"
         >
           {heading}
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           className="text-xs sm:text-lg md:text-xl text-amber-100/90 max-w-3xl mx-auto font-light leading-relaxed"
         >
           {description}
@@ -69,9 +70,9 @@ export const HeroBanner: React.FC<HeroProps> = ({ data }) => {
 
         {/* Action Buttons */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="grid grid-cols-2 gap-2.5 sm:flex sm:flex-row items-center justify-center sm:gap-4 pt-1 max-w-md sm:max-w-none mx-auto"
         >
           <Link
@@ -93,7 +94,7 @@ export const HeroBanner: React.FC<HeroProps> = ({ data }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
           className="pt-6 sm:pt-10 max-w-4xl mx-auto border-t border-amber-500/20 space-y-2.5 sm:space-y-0"
         >
           {/* Mobile Grid: 2 Cards in Row 1, 1 Card in Row 2 | Desktop: 3 Cards in Row 1 */}
