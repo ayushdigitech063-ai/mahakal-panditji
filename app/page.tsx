@@ -10,7 +10,7 @@ import { HeroBanner } from '../components/home/HeroBanner';
 import { StatsSection } from '../components/home/StatsSection';
 import { HomePanditSlider } from '../components/home/HomePanditSlider';
 import { HomePoojaSlider } from '../components/home/HomePoojaSlider';
-import { BlogCard } from '../components/blog/BlogCard';
+import { HomeBlogSlider } from '../components/home/HomeBlogSlider';
 import { SpecialFestivalSection } from '../components/home/SpecialFestivalSection';
 import { ReviewsSection } from '../components/home/ReviewsSection';
 import { ContactForm } from '../components/forms/ContactForm';
@@ -66,7 +66,7 @@ export default function HomePage() {
         {/* Dynamic Stats */}
         <StatsSection stats={homepageData?.stats} />
 
-        {/* Find Pandit Section with 2-Card Row & 5-Second Auto Slider (Max 4 Items) */}
+        {/* 1. Find Pandit Section: 2 Cards/Row Grid with 5s Auto Slider (Max 4 Items) */}
         {(!homepageData?.panditSection || homepageData.panditSection.isVisible) && (
           <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -102,7 +102,7 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* Mukhya Pooja Section with 2-Card Row & 5-Second Auto Slider */}
+        {/* 2. Mukhya Pooja Section: 2 Cards/Row Grid with 5s Auto Slider (Max 4 Items) */}
         {(!homepageData?.poojaSection || homepageData.poojaSection.isVisible) && (
           <section className="py-20 bg-amber-900/5 border-y border-[#eadfce]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -140,19 +140,19 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* Hotels & Bhakt Niwas Dharmashala Slider */}
+        {/* 3. Hotels & Bhakt Niwas Dharmashala: 2 Cards/Row Grid with 5s Auto Slider (Max 4 Items) */}
         <HomeAccommodationsSlider />
 
         {/* Special Festivals 2026 */}
         <SpecialFestivalSection festivals={festivals} settings={homepageData?.festivalSection} />
 
-        {/* 1. Live Photo Gallery Section */}
+        {/* Live Photo Gallery Section */}
         <LiveGallerySection />
 
-        {/* 2. Blog / Knowledge Section (Right Below Gallery) */}
+        {/* 4. Spiritual Knowledge & Guidance Blog: 2 Cards/Row Grid with 5s Auto Slider (Max 4 Items) */}
         {(!homepageData?.blogSection || homepageData.blogSection.isVisible) && (
-          <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-[#eadfce]">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-[#eadfce] space-y-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-[#c96b18] inline-flex items-center gap-1.5 bg-amber-100/60 border border-amber-200 px-3.5 py-1 rounded-full">
                   <BookOpen className="w-3.5 h-3.5" />
@@ -178,11 +178,7 @@ export default function HomePage() {
                 <p className="text-xs text-[#75695d]">Super Admin will publish spiritual blog articles soon.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {blogs.slice(0, homepageData?.blogSection?.countToShow || 6).map((blog) => (
-                  <BlogCard key={blog._id} blog={blog} />
-                ))}
-              </div>
+              <HomeBlogSlider blogs={blogs} />
             )}
           </section>
         )}
@@ -190,7 +186,7 @@ export default function HomePage() {
         {/* Devotee Reviews */}
         <ReviewsSection reviews={reviews} />
 
-        {/* 3. Homepage Collapsible Accordion FAQs Section */}
+        {/* Homepage Collapsible Accordion FAQs Section */}
         {faqsToRender.length > 0 && (
           <section className="py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center space-y-3 mb-12">
@@ -242,7 +238,7 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* 4. Homepage SEO Keywords & Tags Bar */}
+        {/* Homepage SEO Keywords & Tags Bar */}
         {tagsToRender.length > 0 && (
           <section className="py-10 bg-white border-t border-[#eadfce]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
@@ -266,7 +262,7 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* 5. Dynamic Website Overview & Short Description Section */}
+        {/* Dynamic Website Overview & Short Description Section */}
         {shortDescriptionToRender && (
           <section className="py-16 bg-[#fffaf2] border-t border-[#eadfce]">
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import { Building2, Home, ArrowRight } from 'lucide-react';
+import { Building2, Home, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { hotelService } from '../../services/hotelService';
 import { HotelCard } from '../hotel/HotelCard';
 import { Hotel } from '../../types';
@@ -10,6 +10,10 @@ import { Hotel } from '../../types';
 export const HomeAccommodationsSlider: React.FC = () => {
   const [accommodations, setAccommodations] = useState<Hotel[]>([]);
   const [activeTab, setActiveTab] = useState<'Hotel' | 'Dharmashala'>('Hotel');
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftState, setScrollLeftState] = useState(0);
 
   useEffect(() => {
     hotelService.getHotels().then((data) => setAccommodations(data));
@@ -19,10 +23,63 @@ export const HomeAccommodationsSlider: React.FC = () => {
     (item) => item.propertyType === activeTab
   );
 
+  // 5-second Auto Slider
+  useEffect(() => {
+    if (filtered.length === 0 || isMouseDown) return;
+
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const container = scrollRef.current;
+        const cardWidth = container.clientWidth > 640 ? 360 : 280;
+
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [filtered, isMouseDown]);
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsMouseDown(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeftState(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeaveOrUp = () => {
+    setIsMouseDown(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDown || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    scrollRef.current.scrollLeft = scrollLeftState - walk;
+  };
+
+  const displayedItems = filtered.slice(0, 4);
+
   return (
     <section className="py-12 sm:py-16 bg-amber-900/5 border-y border-[#eadfce] overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-[#c96b18] bg-amber-100/70 border border-amber-200 px-3 py-1 rounded-full">
               Ujjain Yatri Stay
@@ -75,11 +132,45 @@ export const HomeAccommodationsSlider: React.FC = () => {
           </div>
         </div>
 
-        {/* Responsive Grid View instead of overflowing clipped slider */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
-          {filtered.slice(0, 4).map((item) => (
-            <HotelCard key={item.id} hotel={item} />
-          ))}
+        {/* 2-Card Row Grid Slider with 5s Auto-Rotation */}
+        <div className="relative">
+          {displayedItems.length > 2 && (
+            <div className="hidden sm:flex items-center gap-2 absolute -top-14 right-0 z-10">
+              <button
+                type="button"
+                onClick={scrollLeft}
+                className="w-9 h-9 rounded-full bg-white border border-[#eadfce] text-[#7a1f1f] hover:bg-[#c96b18] hover:text-white flex items-center justify-center shadow-sm transition-all"
+                aria-label="Previous Stay"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={scrollRight}
+                className="w-9 h-9 rounded-full bg-white border border-[#eadfce] text-[#7a1f1f] hover:bg-[#c96b18] hover:text-white flex items-center justify-center shadow-sm transition-all"
+                aria-label="Next Stay"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
+          <div
+            ref={scrollRef}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeaveOrUp}
+            onMouseUp={handleMouseLeaveOrUp}
+            onMouseMove={handleMouseMove}
+            className={`grid grid-flow-col auto-cols-[calc(50%-0.375rem)] sm:auto-cols-[calc(50%-1rem)] gap-3 sm:gap-6 overflow-x-auto pb-4 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth ${
+              isMouseDown ? 'cursor-grabbing select-none' : 'cursor-grab'
+            }`}
+          >
+            {displayedItems.map((item) => (
+              <div key={item.id} className="snap-start shrink-0">
+                <HotelCard hotel={item} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
