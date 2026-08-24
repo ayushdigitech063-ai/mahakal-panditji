@@ -8,7 +8,7 @@ import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { HeroBanner } from '../components/home/HeroBanner';
 import { StatsSection } from '../components/home/StatsSection';
-import { PanditCard } from '../components/pandit/PanditCard';
+import { HomePanditSlider } from '../components/home/HomePanditSlider';
 import { HomePoojaSlider } from '../components/home/HomePoojaSlider';
 import { BlogCard } from '../components/blog/BlogCard';
 import { SpecialFestivalSection } from '../components/home/SpecialFestivalSection';
@@ -66,10 +66,10 @@ export default function HomePage() {
         {/* Dynamic Stats */}
         <StatsSection stats={homepageData?.stats} />
 
-        {/* Find Pandit Section */}
+        {/* Find Pandit Section with 2-Card Row & 5-Second Auto Slider (Max 4 Items) */}
         {(!homepageData?.panditSection || homepageData.panditSection.isVisible) && (
-          <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-[#c96b18]">
                   Verified Scholars
@@ -97,11 +97,7 @@ export default function HomePage() {
                 <p className="text-xs text-[#75695d]">Super Admin will upload verified pandits soon.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
-                {pandits.slice(0, homepageData?.panditSection?.countToShow || 4).map((pandit) => (
-                  <PanditCard key={pandit._id} pandit={pandit} />
-                ))}
-              </div>
+              <HomePanditSlider pandits={pandits} />
             )}
           </section>
         )}
