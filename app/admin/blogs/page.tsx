@@ -2,20 +2,26 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { Plus, Trash2, Edit, Upload, X } from 'lucide-react';
-import { Editor } from '@tinymce/tinymce-react';
+import 'react-quill-new/dist/quill.snow.css';
 import { blogService } from '@/services/blogService';
 import { apiClient } from '@/lib/apiClient';
 import { Blog } from '@/types';
 import { showAlert } from '@/lib/swal';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
+const ReactQuill = dynamic(() => import('react-quill-new'), {
+  ssr: false,
+  loading: () => <div className="p-4 text-xs font-semibold text-[#75695d]">Loading Rich Text Editor...</div>,
+});
+
 export default function AdminBlogsPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingBlog, setEditingBlog] = useState<Blog | null>(null);
-// kjweghfdlghsdlfjkghlkjd
+
   const [formData, setFormData] = useState({
     title: '',
     featuredImage: '/images/blogs/blog1.jpg',
@@ -125,6 +131,16 @@ export default function AdminBlogsPage() {
     } catch (err: any) {
       showAlert.error('Validation Error', err.message);
     }
+  };
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ color: [] }, { background: [] }],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link', 'clean'],
+    ],
   };
 
   return (
@@ -292,31 +308,18 @@ export default function AdminBlogsPage() {
                 />
               </div>
 
-              {/* TinyMCE Rich Text Editor */}
+              {/* ReactQuill Rich Text Editor */}
               <div>
                 <label className="block font-semibold uppercase text-[#75695d] mb-1">
-                  Rich Text Content (TinyMCE Editor)
+                  Rich Text Content (React Quill Editor)
                 </label>
-                <div className="rounded-xl border border-[#eadfce] overflow-hidden">
-                  <Editor
-                    apiKey="no-api-key"
-                    init={{
-                      height: 350,
-                      menubar: false,
-                      plugins: [
-                        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                        'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-                      ],
-                      toolbar:
-                        'undo redo | blocks | bold italic forecolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist outdent indent | ' +
-                        'removeformat | help',
-                      content_style:
-                        'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; background-color:#fffaf2; color:#2b2118 }',
-                    }}
+                <div className="rounded-xl border border-[#eadfce] overflow-hidden bg-[#fffaf2]">
+                  <ReactQuill
+                    theme="snow"
+                    modules={modules}
                     value={formData.content}
-                    onEditorChange={(newContent) => setFormData({ ...formData, content: newContent })}
+                    onChange={(newContent) => setFormData({ ...formData, content: newContent })}
+                    className="h-64 mb-12"
                   />
                 </div>
               </div>
