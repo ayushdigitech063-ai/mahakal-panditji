@@ -47,7 +47,6 @@ export const Navbar: React.FC = () => {
     { name: 'Packages', href: '/packages' },
     { name: 'About', href: '/about' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -110,7 +109,7 @@ export const Navbar: React.FC = () => {
               <ChevronDown className="w-3.5 h-3.5 text-[#c96b18]" />
             </Link>
 
-            {/* Dropdown Menu */}
+            {/* Dropdown Menu - Lists Super Admin uploaded poojas directly */}
             <AnimatePresence>
               {poojasDropdownOpen && (
                 <motion.div
@@ -124,16 +123,20 @@ export const Navbar: React.FC = () => {
                     <span>Sacred Mahakal Rituals</span>
                   </div>
                   <div className="max-h-80 overflow-y-auto space-y-0.5 pt-1">
-                    {poojasList.map((pooja) => (
-                      <Link
-                        key={pooja._id}
-                        href={`/pooja/${pooja.slug}`}
-                        onClick={() => setPoojasDropdownOpen(false)}
-                        className="block px-3 py-2 rounded-xl text-xs font-semibold text-[#2b2118] hover:bg-[#fffaf2] hover:text-[#7a1f1f] transition-colors"
-                      >
-                        {pooja.name}
-                      </Link>
-                    ))}
+                    {poojasList.length === 0 ? (
+                      <p className="px-3 py-2 text-xs text-[#75695d]">No pooja services available yet.</p>
+                    ) : (
+                      poojasList.map((pooja) => (
+                        <Link
+                          key={pooja._id}
+                          href={`/pooja/${pooja.slug}`}
+                          onClick={() => setPoojasDropdownOpen(false)}
+                          className="block px-3 py-2 rounded-xl text-xs font-semibold text-[#2b2118] hover:bg-[#fffaf2] hover:text-[#7a1f1f] transition-colors"
+                        >
+                          {pooja.name}
+                        </Link>
+                      ))
+                    )}
                     <Link
                       href="/pooja"
                       onClick={() => setPoojasDropdownOpen(false)}
@@ -199,15 +202,6 @@ export const Navbar: React.FC = () => {
             }`}
           >
             Blog
-          </Link>
-
-          <Link
-            href="/contact"
-            className={`text-xs xl:text-sm font-medium transition-colors hover:text-[#c96b18] ${
-              pathname === '/contact' ? 'text-[#c96b18] font-semibold' : isScrolled ? 'text-[#2b2118]' : 'text-white/90'
-            }`}
-          >
-            Contact
           </Link>
         </nav>
 

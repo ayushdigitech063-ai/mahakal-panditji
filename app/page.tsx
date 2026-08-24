@@ -9,7 +9,7 @@ import { Footer } from '../components/layout/Footer';
 import { HeroBanner } from '../components/home/HeroBanner';
 import { StatsSection } from '../components/home/StatsSection';
 import { PanditCard } from '../components/pandit/PanditCard';
-import { PoojaCard } from '../components/pooja/PoojaCard';
+import { HomePoojaSlider } from '../components/home/HomePoojaSlider';
 import { BlogCard } from '../components/blog/BlogCard';
 import { SpecialFestivalSection } from '../components/home/SpecialFestivalSection';
 import { ReviewsSection } from '../components/home/ReviewsSection';
@@ -106,11 +106,11 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* Mukhya Pooja Section */}
+        {/* Mukhya Pooja Section with 2-Card Row & 5-Second Auto Slider */}
         {(!homepageData?.poojaSection || homepageData.poojaSection.isVisible) && (
           <section className="py-20 bg-amber-900/5 border-y border-[#eadfce]">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
                   <span className="text-xs font-bold uppercase tracking-widest text-[#c96b18]">
                     Sacred Ceremonies
@@ -138,11 +138,7 @@ export default function HomePage() {
                   <p className="text-xs text-[#75695d]">Super Admin will upload sacred pooja offerings soon.</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {poojas.map((pooja) => (
-                    <PoojaCard key={pooja._id} pooja={pooja} />
-                  ))}
-                </div>
+                <HomePoojaSlider poojas={poojas} />
               )}
             </div>
           </section>
@@ -220,12 +216,12 @@ export default function HomePage() {
                 return (
                   <div
                     key={index}
-                    className="bg-white rounded-3xl border border-[#eadfce] overflow-hidden shadow-sm transition-all"
+                    className="bg-[#fffaf2] rounded-3xl border border-[#eadfce] overflow-hidden shadow-sm transition-all"
                   >
                     <button
                       type="button"
                       onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                      className="w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-[#7a1f1f] text-base sm:text-lg hover:bg-[#fffaf2] transition-colors"
+                      className="w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-[#7a1f1f] text-base sm:text-lg hover:bg-white transition-colors"
                     >
                       <div className="flex items-start gap-2.5">
                         <span className="text-[#c96b18]">Q{index + 1}.</span>
@@ -239,7 +235,7 @@ export default function HomePage() {
                     </button>
 
                     {isOpen && (
-                      <div className="px-6 pb-6 pt-2 text-sm sm:text-base text-[#75695d] border-t border-[#eadfce]/50 leading-relaxed bg-[#fffaf2]/60">
+                      <div className="px-6 pb-6 pt-2 text-sm sm:text-base text-[#75695d] border-t border-[#eadfce]/50 leading-relaxed bg-white">
                         {faq.answer}
                       </div>
                     )}

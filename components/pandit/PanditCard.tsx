@@ -25,7 +25,7 @@ export const PanditCard: React.FC<PanditCardProps> = ({ pandit }) => {
           src={imgSrc}
           alt={pandit.name}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          className="object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-500"
           sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 380px"
           loading="lazy"
           decoding="async"
