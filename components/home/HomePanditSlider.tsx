@@ -22,7 +22,7 @@ export const HomePanditSlider: React.FC<HomePanditSliderProps> = ({ pandits }) =
     const interval = setInterval(() => {
       if (scrollRef.current) {
         const container = scrollRef.current;
-        const cardWidth = container.clientWidth > 640 ? 360 : 280;
+        const cardWidth = container.clientWidth > 640 ? 300 : 280;
 
         if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
           container.scrollTo({ left: 0, behavior: 'smooth' });
@@ -37,13 +37,13 @@ export const HomePanditSlider: React.FC<HomePanditSliderProps> = ({ pandits }) =
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
     }
   };
 
@@ -67,13 +67,10 @@ export const HomePanditSlider: React.FC<HomePanditSliderProps> = ({ pandits }) =
     scrollRef.current.scrollLeft = scrollLeftState - walk;
   };
 
-  // Maximum 4 Pandit Ji cards total on homepage slider
-  const displayedPandits = pandits.slice(0, 4);
-
   return (
     <div className="relative">
       {/* Navigation Buttons for Desktop */}
-      {displayedPandits.length > 2 && (
+      {pandits.length > 4 && (
         <div className="hidden sm:flex items-center gap-2 absolute -top-16 right-0 z-10">
           <button
             type="button"
@@ -94,18 +91,18 @@ export const HomePanditSlider: React.FC<HomePanditSliderProps> = ({ pandits }) =
         </div>
       )}
 
-      {/* 2 Cards per Row Grid Slider with 5s Auto-Rotation */}
+      {/* Mobile: 2 Cards per View Grid Slider | Desktop: 4 Cards per View Grid Slider with 5s Auto-Rotation */}
       <div
         ref={scrollRef}
         onMouseDown={handleMouseDown}
         onMouseLeave={handleMouseLeaveOrUp}
         onMouseUp={handleMouseLeaveOrUp}
         onMouseMove={handleMouseMove}
-        className={`grid grid-flow-col auto-cols-[calc(50%-0.375rem)] sm:auto-cols-[calc(50%-1rem)] gap-3 sm:gap-6 overflow-x-auto pb-4 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth ${
+        className={`grid grid-flow-col auto-cols-[calc(50%-0.375rem)] sm:auto-cols-[calc(33.333%-0.75rem)] lg:auto-cols-[calc(25%-0.9375rem)] gap-3 sm:gap-5 overflow-x-auto pb-4 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth ${
           isMouseDown ? 'cursor-grabbing select-none' : 'cursor-grab'
         }`}
       >
-        {displayedPandits.map((pandit) => (
+        {pandits.map((pandit) => (
           <div key={pandit._id} className="snap-start shrink-0">
             <PanditCard pandit={pandit} />
           </div>

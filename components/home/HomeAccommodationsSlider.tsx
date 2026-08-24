@@ -30,7 +30,7 @@ export const HomeAccommodationsSlider: React.FC = () => {
     const interval = setInterval(() => {
       if (scrollRef.current) {
         const container = scrollRef.current;
-        const cardWidth = container.clientWidth > 640 ? 360 : 280;
+        const cardWidth = container.clientWidth > 640 ? 300 : 280;
 
         if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
           container.scrollTo({ left: 0, behavior: 'smooth' });
@@ -45,13 +45,13 @@ export const HomeAccommodationsSlider: React.FC = () => {
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
     }
   };
 
@@ -73,8 +73,6 @@ export const HomeAccommodationsSlider: React.FC = () => {
     const walk = (x - startX) * 1.5;
     scrollRef.current.scrollLeft = scrollLeftState - walk;
   };
-
-  const displayedItems = filtered.slice(0, 4);
 
   return (
     <section className="py-12 sm:py-16 bg-amber-900/5 border-y border-[#eadfce] overflow-hidden">
@@ -132,9 +130,9 @@ export const HomeAccommodationsSlider: React.FC = () => {
           </div>
         </div>
 
-        {/* 2-Card Row Grid Slider with 5s Auto-Rotation */}
+        {/* Mobile: 2 Cards per View | Desktop: 4 Cards per View Grid Slider with 5s Auto-Rotation */}
         <div className="relative">
-          {displayedItems.length > 2 && (
+          {filtered.length > 4 && (
             <div className="hidden sm:flex items-center gap-2 absolute -top-14 right-0 z-10">
               <button
                 type="button"
@@ -161,11 +159,11 @@ export const HomeAccommodationsSlider: React.FC = () => {
             onMouseLeave={handleMouseLeaveOrUp}
             onMouseUp={handleMouseLeaveOrUp}
             onMouseMove={handleMouseMove}
-            className={`grid grid-flow-col auto-cols-[calc(50%-0.375rem)] sm:auto-cols-[calc(50%-1rem)] gap-3 sm:gap-6 overflow-x-auto pb-4 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth ${
+            className={`grid grid-flow-col auto-cols-[calc(50%-0.375rem)] sm:auto-cols-[calc(33.333%-0.75rem)] lg:auto-cols-[calc(25%-0.9375rem)] gap-3 sm:gap-5 overflow-x-auto pb-4 pt-1 scrollbar-none snap-x snap-mandatory scroll-smooth ${
               isMouseDown ? 'cursor-grabbing select-none' : 'cursor-grab'
             }`}
           >
-            {displayedItems.map((item) => (
+            {filtered.map((item) => (
               <div key={item.id} className="snap-start shrink-0">
                 <HotelCard hotel={item} />
               </div>
