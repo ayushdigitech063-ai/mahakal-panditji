@@ -30,6 +30,10 @@ export default function AdminBlogsPage() {
     content: '<p>Discover the eternal glory and sacred rituals of Lord Mahakal in Ujjain...</p>',
     author: 'Mahakal Editorial Team',
     readTime: '5 min read',
+    tags: 'महाकाल मंदिर, उज्जैन दर्शन, कालसर्प दोष पूजा',
+    faqs: [
+      { question: 'उज्जैन कालसर्प दोष पूजा की बुकिंग कैसे करें?', answer: 'आप सीधे हमारे अधिकृत पंडित जी से फोन या व्हाट्सएप पर संपर्क करके तिथि बुक कर सकते हैं।' },
+    ],
     status: 'published' as 'published' | 'draft' | 'hidden',
   });
 
@@ -96,6 +100,10 @@ export default function AdminBlogsPage() {
       content: '<p>Ujjain is recognized as the eternal center of time (Mahakal)...</p>',
       author: 'Mahakal Editorial Team',
       readTime: '5 min read',
+      tags: 'महाकाल मंदिर, उज्जैन दर्शन, कालसर्प दोष पूजा',
+      faqs: [
+        { question: 'उज्जैन कालसर्प दोष पूजा की बुकिंग कैसे करें?', answer: 'आप सीधे हमारे अधिकृत पंडित जी से फोन या व्हाट्सएप पर संपर्क करके तिथि बुक कर सकते हैं।' },
+      ],
       status: 'published',
     });
     setModalOpen(true);
@@ -111,6 +119,10 @@ export default function AdminBlogsPage() {
       content: b.content,
       author: b.author,
       readTime: b.readTime,
+      tags: (b.tags || []).join(', '),
+      faqs: b.faqs && b.faqs.length > 0 ? b.faqs : [
+        { question: 'उज्जैन कालसर्प दोष पूजा की बुकिंग कैसे करें?', answer: 'आप सीधे हमारे अधिकृत पंडित जी से फोन या व्हाट्सएप पर संपर्क करके तिथि बुक कर सकते हैं।' },
+      ],
       status: b.status,
     });
     setModalOpen(true);
@@ -119,11 +131,16 @@ export default function AdminBlogsPage() {
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const payload = {
+        ...formData,
+        tags: formData.tags ? formData.tags.split(',').map((s) => s.trim()) : [],
+      };
+
       if (editingBlog) {
-        await blogService.updateBlog(editingBlog._id, formData);
+        await blogService.updateBlog(editingBlog._id, payload);
         await showAlert.success('Updated', 'Blog article updated successfully');
       } else {
-        await blogService.createBlog(formData);
+        await blogService.createBlog(payload);
         await showAlert.success('Created', 'New Blog article created successfully');
       }
       setModalOpen(false);
@@ -322,6 +339,75 @@ export default function AdminBlogsPage() {
                     className="h-64 mb-12"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block font-semibold uppercase text-[#75695d] mb-1">SEO Search Keywords & Tags (Comma separated)</label>
+                <input
+                  type="text"
+                  placeholder="महाकाल मंदिर, उज्जैन दर्शन, कालसर्प दोष पूजा, मंगलनाथ"
+                  value={formData.tags}
+                  onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl border border-[#eadfce] bg-[#fffaf2]"
+                />
+              </div>
+
+              {/* Custom FAQs Manager for Article */}
+              <div className="space-y-3 pt-2 border-t border-[#eadfce]">
+                <div className="flex items-center justify-between">
+                  <label className="block font-bold uppercase text-[#7a1f1f]">Article Custom FAQs (सवाल & जवाब)</label>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        faqs: [...formData.faqs, { question: '', answer: '' }],
+                      })
+                    }
+                    className="text-xs font-bold text-[#c96b18] hover:text-[#7a1f1f]"
+                  >
+                    + Add New FAQ
+                  </button>
+                </div>
+
+                {formData.faqs.map((faq, index) => (
+                  <div key={index} className="p-3 bg-[#fffaf2] rounded-xl border border-[#eadfce] space-y-2 relative">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          faqs: formData.faqs.filter((_, i) => i !== index),
+                        })
+                      }
+                      className="absolute top-2 right-2 text-red-500 text-xs font-bold hover:text-red-700"
+                    >
+                      ✕ Remove
+                    </button>
+                    <input
+                      type="text"
+                      placeholder={`Question ${index + 1}`}
+                      value={faq.question}
+                      onChange={(e) => {
+                        const updated = [...formData.faqs];
+                        updated[index].question = e.target.value;
+                        setFormData({ ...formData, faqs: updated });
+                      }}
+                      className="w-full px-3 py-1.5 rounded-lg border border-[#eadfce] bg-white font-semibold"
+                    />
+                    <textarea
+                      rows={2}
+                      placeholder={`Answer ${index + 1}`}
+                      value={faq.answer}
+                      onChange={(e) => {
+                        const updated = [...formData.faqs];
+                        updated[index].answer = e.target.value;
+                        setFormData({ ...formData, faqs: updated });
+                      }}
+                      className="w-full px-3 py-1.5 rounded-lg border border-[#eadfce] bg-white"
+                    />
+                  </div>
+                ))}
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t border-[#eadfce]">

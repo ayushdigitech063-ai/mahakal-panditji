@@ -54,6 +54,8 @@ export interface Blog {
   content: string;
   author: string;
   readTime: string;
+  tags?: string[];
+  faqs?: Array<{ question: string; answer: string }>;
   status: 'draft' | 'published' | 'hidden';
   publishedAt?: string;
   createdAt?: string;
