@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Plus, Eye, EyeOff, Trash2, Edit, Upload } from 'lucide-react';
+import { Plus, Eye, EyeOff, Trash2, Edit, Upload, X } from 'lucide-react';
 import { poojaService } from '@/services/poojaService';
 import { apiClient } from '@/lib/apiClient';
 import { Pooja } from '@/types';
@@ -25,6 +25,10 @@ export default function AdminPoojasPage() {
     benefits: 'Removes negative energies, Health & Longevity',
     procedure: 'Sankalp, Abhishek with Panchamrit, Laghu Rudra Jaap, Aarti',
     samagri: 'Panchamrit, Belpatra, Bhasma, Gangajal',
+    tags: 'महाकाल रुद्राभिषेक, उज्जैन पूजा, कालसर्प दोष',
+    faqs: [
+      { question: 'उज्जैन में पूजा करवाने की प्रक्रिया क्या है?', answer: 'आप सीधे व्हाट्सएप या फोन पर संपर्क करके शुभ मुहूर्त तय कर सकते हैं।' },
+    ],
     isActive: true,
   });
 
@@ -99,6 +103,10 @@ export default function AdminPoojasPage() {
       benefits: 'Removes negative energies, Ensures health & longevity',
       procedure: 'Sankalp & Ganpati Pujan, Abhishek with 11 dravyans, Aarti',
       samagri: 'Panchamrit, Belpatra (108), Bhasma, Gangajal',
+      tags: 'महाकाल रुद्राभिषेक, उज्जैन पूजा, कालसर्प दोष',
+      faqs: [
+        { question: 'उज्जैन में पूजा करवाने की प्रक्रिया क्या है?', answer: 'आप सीधे व्हाट्सएप या फोन पर संपर्क करके शुभ मुहूर्त तय कर सकते हैं।' },
+      ],
       isActive: true,
     });
     setModalOpen(true);
@@ -115,7 +123,11 @@ export default function AdminPoojasPage() {
       category: p.category,
       benefits: p.benefits.join(', '),
       procedure: p.procedure.join(', '),
-      samagri: p.samagri.join(', '),
+      samagri: (p.samagri || []).join(', '),
+      tags: (p.tags || []).join(', '),
+      faqs: p.faqs && p.faqs.length > 0 ? p.faqs : [
+        { question: 'उज्जैन में पूजा करवाने की प्रक्रिया क्या है?', answer: 'आप सीधे व्हाट्सएप या फोन पर संपर्क करके शुभ मुहूर्त तय कर सकते हैं।' },
+      ],
       isActive: p.isActive,
     });
     setModalOpen(true);
@@ -129,6 +141,7 @@ export default function AdminPoojasPage() {
         benefits: formData.benefits.split(',').map((s) => s.trim()),
         procedure: formData.procedure.split(',').map((s) => s.trim()),
         samagri: formData.samagri.split(',').map((s) => s.trim()),
+        tags: formData.tags ? formData.tags.split(',').map((s) => s.trim()) : [],
       };
 
       if (editingPooja) {
@@ -223,13 +236,22 @@ export default function AdminPoojasPage() {
         </div>
       )}
 
-      {/* Modal */}
+      {/* Modal Form */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 max-h-[90vh] overflow-y-auto border border-[#eadfce]">
-            <h3 className="heading-spiritual text-2xl font-bold text-[#7a1f1f] border-b border-[#eadfce] pb-3">
-              {editingPooja ? 'Edit Pooja Service' : 'Add New Pooja Ceremony'}
-            </h3>
+            <div className="flex items-center justify-between border-b border-[#eadfce] pb-3">
+              <h3 className="heading-spiritual text-2xl font-bold text-[#7a1f1f]">
+                {editingPooja ? 'Edit Pooja Service' : 'Add New Pooja Ceremony'}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setModalOpen(false)}
+                className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-[#7a1f1f]"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
             <form onSubmit={handleSubmitForm} className="space-y-4 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -327,6 +349,75 @@ export default function AdminPoojasPage() {
                   onChange={(e) => setFormData({ ...formData, procedure: e.target.value })}
                   className="w-full px-3 py-2 rounded-xl border border-[#eadfce] bg-[#fffaf2]"
                 />
+              </div>
+
+              <div>
+                <label className="block font-semibold uppercase text-[#75695d] mb-1">SEO Search Keywords & Tags (Comma separated)</label>
+                <input
+                  type="text"
+                  placeholder="महाकाल रुद्राभिषेक, उज्जैन पूजा, कालसर्प दोष, मंगलनाथ"
+                  value={formData.tags}
+                  onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                  className="w-full px-3 py-2 rounded-xl border border-[#eadfce] bg-[#fffaf2]"
+                />
+              </div>
+
+              {/* Custom FAQs Manager */}
+              <div className="space-y-3 pt-2 border-t border-[#eadfce]">
+                <div className="flex items-center justify-between">
+                  <label className="block font-bold uppercase text-[#7a1f1f]">Custom Pooja FAQs (सवाल & जवाब)</label>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        faqs: [...formData.faqs, { question: '', answer: '' }],
+                      })
+                    }
+                    className="text-xs font-bold text-[#c96b18] hover:text-[#7a1f1f]"
+                  >
+                    + Add New FAQ
+                  </button>
+                </div>
+
+                {formData.faqs.map((faq, index) => (
+                  <div key={index} className="p-3 bg-[#fffaf2] rounded-xl border border-[#eadfce] space-y-2 relative">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          faqs: formData.faqs.filter((_, i) => i !== index),
+                        })
+                      }
+                      className="absolute top-2 right-2 text-red-500 text-xs font-bold hover:text-red-700"
+                    >
+                      ✕ Remove
+                    </button>
+                    <input
+                      type="text"
+                      placeholder={`Question ${index + 1}`}
+                      value={faq.question}
+                      onChange={(e) => {
+                        const updated = [...formData.faqs];
+                        updated[index].question = e.target.value;
+                        setFormData({ ...formData, faqs: updated });
+                      }}
+                      className="w-full px-3 py-1.5 rounded-lg border border-[#eadfce] bg-white font-semibold"
+                    />
+                    <textarea
+                      rows={2}
+                      placeholder={`Answer ${index + 1}`}
+                      value={faq.answer}
+                      onChange={(e) => {
+                        const updated = [...formData.faqs];
+                        updated[index].answer = e.target.value;
+                        setFormData({ ...formData, faqs: updated });
+                      }}
+                      className="w-full px-3 py-1.5 rounded-lg border border-[#eadfce] bg-white"
+                    />
+                  </div>
+                ))}
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t border-[#eadfce]">

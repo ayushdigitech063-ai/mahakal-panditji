@@ -36,6 +36,8 @@ export interface Pooja {
   samagri: string[];
   price: number;
   category: string;
+  tags?: string[];
+  faqs?: Array<{ question: string; answer: string }>;
   isActive: boolean;
   isDeleted?: boolean;
   createdAt?: string;
@@ -182,4 +184,3 @@ export interface ApiResponse<T = any> {
 }
 
 export * from './newModules';
-
