@@ -13,7 +13,7 @@ import { HomePoojaSlider } from '../components/home/HomePoojaSlider';
 import { HomeBlogSlider } from '../components/home/HomeBlogSlider';
 import { SpecialFestivalSection } from '../components/home/SpecialFestivalSection';
 import { ReviewsSection } from '../components/home/ReviewsSection';
-import { ContactForm } from '../components/forms/ContactForm';
+import { DirectConnectCard } from '../components/ui/DirectConnectCard';
 import { EarthIntroAnimation } from '../components/intro/EarthIntroAnimation';
 import { LiveGallerySection } from '../components/home/LiveGallerySection';
 import { HomeAccommodationsSlider } from '../components/home/HomeAccommodationsSlider';
@@ -66,7 +66,7 @@ export default function HomePage() {
         {/* Dynamic Stats */}
         <StatsSection stats={homepageData?.stats} />
 
-        {/* 1. Find Pandit Section: 2 Cards/Row Grid with 5s Auto Slider (Max 4 Items) */}
+        {/* 1. Find Pandit Section */}
         {(!homepageData?.panditSection || homepageData.panditSection.isVisible) && (
           <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -102,7 +102,7 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* 2. Mukhya Pooja Section: 2 Cards/Row Grid with 5s Auto Slider (Max 4 Items) */}
+        {/* 2. Mukhya Pooja Section */}
         {(!homepageData?.poojaSection || homepageData.poojaSection.isVisible) && (
           <section className="py-20 bg-amber-900/5 border-y border-[#eadfce]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -140,7 +140,7 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* 3. Hotels & Bhakt Niwas Dharmashala: 2 Cards/Row Grid with 5s Auto Slider (Max 4 Items) */}
+        {/* 3. Hotels & Bhakt Niwas Dharmashala */}
         <HomeAccommodationsSlider />
 
         {/* Special Festivals 2026 */}
@@ -149,7 +149,7 @@ export default function HomePage() {
         {/* Live Photo Gallery Section */}
         <LiveGallerySection />
 
-        {/* 4. Spiritual Knowledge & Guidance Blog: 2 Cards/Row Grid with 5s Auto Slider (Max 4 Items) */}
+        {/* 4. Spiritual Knowledge & Guidance Blog */}
         {(!homepageData?.blogSection || homepageData.blogSection.isVisible) && (
           <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-[#eadfce] space-y-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -281,39 +281,11 @@ export default function HomePage() {
           </section>
         )}
 
-        {/* Contact & Booking Section */}
+        {/* Direct Connect Section (Replaced Contact Form with Direct WhatsApp / Call Card) */}
         {(!homepageData?.contactSection || homepageData.contactSection.isVisible) && (
           <section className="py-20 bg-amber-900/5 border-t border-[#eadfce]">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
-                <div className="w-12 h-12 rounded-full bg-saffron-gradient flex items-center justify-center shadow-md">
-                  <Flame className="w-7 h-7 text-white" />
-                </div>
-                <h2 className="heading-spiritual text-3xl sm:text-4xl font-extrabold text-[#7a1f1f]">
-                  {homepageData?.contactSection?.heading || 'Book Your Sacred Ritual Today'}
-                </h2>
-                <p className="text-base text-[#75695d] leading-relaxed">
-                  {homepageData?.contactSection?.description || 'Have questions or need assistance? Fill out the form and our priest coordination team will reach out.'}
-                </p>
-                <div className="space-y-4 pt-4 border-t border-[#eadfce]">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
-                      ✓
-                    </div>
-                    <span className="text-sm font-semibold text-[#2b2118]">100% Purity & Vedic Vidhi Guaranteed</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
-                      ✓
-                    </div>
-                    <span className="text-sm font-semibold text-[#2b2118]">Direct Support from Ujjain Pandits</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <ContactForm />
-              </div>
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <DirectConnectCard />
             </div>
           </section>
         )}
