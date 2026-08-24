@@ -19,14 +19,14 @@ export const PanditCard: React.FC<PanditCardProps> = ({ pandit }) => {
 
   return (
     <div className="bg-white rounded-2xl sm:rounded-3xl border border-[#eadfce] overflow-hidden shadow-spiritual hover:shadow-spiritual-hover transition-all duration-300 flex flex-col group">
-      {/* Image & Badge - Passport Aspect Ratio & Face Fit */}
-      <div className="relative h-44 sm:h-64 w-full overflow-hidden bg-amber-950/10">
+      {/* Image & Badge - Portrait Height & Smart Object Positioning */}
+      <div className="relative h-48 sm:h-80 w-full overflow-hidden bg-amber-950/10">
         <Image
           src={imgSrc}
           alt={pandit.name}
           fill
-          className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-          sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 380px"
+          className="object-cover object-[center_15%] group-hover:scale-105 transition-transform duration-500"
+          sizes="(max-width: 640px) 45vw, (max-width: 1024px) 50vw, 600px"
           loading="lazy"
           decoding="async"
           onError={() => {
