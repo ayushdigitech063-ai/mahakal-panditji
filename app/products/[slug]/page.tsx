@@ -31,6 +31,7 @@ export default function ProductDetailPage() {
   const slug = params?.slug as string;
 
   const [product, setProduct] = useState<Product | null>(null);
+  const [activeImage, setActiveImage] = useState<string>('');
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [relatedSearch, setRelatedSearch] = useState<string>('');
   const [loading, setLoading] = useState(true);
@@ -41,6 +42,7 @@ export default function ProductDetailPage() {
       productService.getProductBySlug(slug).then((data) => {
         setProduct(data);
         if (data) {
+          setActiveImage(data.image || (data.images && data.images.length > 0 ? data.images[0] : ''));
           productService.getProducts().then((allProds) => {
             const related = allProds.filter(
               (p) => (p._id || p.id) !== (data._id || data.id)
@@ -101,7 +103,8 @@ export default function ProductDetailPage() {
       ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
       : null;
 
-  const imgSrc = resolveImageUrl(product.image, '/images/products/sample.jpg');
+  const galleryList = product.images && product.images.length > 0 ? product.images : [product.image];
+  const mainDisplayImg = resolveImageUrl(activeImage || product.image, '/images/products/sample.jpg');
 
   const filteredRelated = relatedProducts.filter((rel) => {
     if (!relatedSearch.trim()) return true;
@@ -141,7 +144,7 @@ export default function ProductDetailPage() {
           <div className="lg:col-span-5 space-y-4">
             <div className="relative h-72 sm:h-96 md:h-[400px] rounded-3xl overflow-hidden bg-amber-950/10 border border-[#eadfce] shadow-md group">
               <Image
-                src={imgSrc}
+                src={mainDisplayImg}
                 alt={product.name}
                 fill
                 priority
@@ -172,6 +175,29 @@ export default function ProductDetailPage() {
                 )}
               </div>
             </div>
+
+            {/* Thumbnail Gallery (If Multiple Images) */}
+            {galleryList.length > 1 && (
+              <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none">
+                {galleryList.map((gImg, idx) => {
+                  const resolvedG = resolveImageUrl(gImg, '/images/products/sample.jpg');
+                  const isSelected = (activeImage || product.image) === gImg;
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveImage(gImg)}
+                      className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 shrink-0 transition-all ${
+                        isSelected
+                          ? 'border-[#c96b18] ring-4 ring-[#c96b18]/20 scale-105 shadow-md'
+                          : 'border-[#eadfce] opacity-70 hover:opacity-100 hover:border-amber-300'
+                      }`}
+                    >
+                      <Image src={resolvedG} alt={`${product.name} ${idx + 1}`} fill className="object-cover" />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Trust Features Bar */}
             <div className="grid grid-cols-2 gap-3">

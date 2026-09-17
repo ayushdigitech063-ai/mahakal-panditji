@@ -20,6 +20,7 @@ export default function AdminProductsPage() {
   const [formData, setFormData] = useState({
     name: '',
     image: '',
+    images: [] as string[],
     price: 1100,
     originalPrice: 1500,
     category: 'Puja Samagri',
@@ -28,6 +29,12 @@ export default function AdminProductsPage() {
     inStock: true,
     isActive: true,
   });
+
+  // Filters State for Admin Table
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategoryFilter, setSelectedCategoryFilter] = useState('ALL');
+  const [selectedStockFilter, setSelectedStockFilter] = useState('ALL');
+  const [selectedPanditFilter, setSelectedPanditFilter] = useState('ALL');
 
   const loadData = async () => {
     try {
@@ -79,18 +86,42 @@ export default function AdminProductsPage() {
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files && e.target.files.length > 0) {
       try {
-        const file = e.target.files[0];
-        const res = await apiClient.upload('products', file);
-        if (res.success && res.data.url) {
-          setFormData((prev) => ({ ...prev, image: res.data.url }));
-          showAlert.success('Uploaded', 'Product image uploaded successfully');
+        const files = Array.from(e.target.files);
+        const uploadPromises = files.map((file) => apiClient.upload('products', file));
+        const results = await Promise.all(uploadPromises);
+
+        const newUrls = results
+          .filter((res) => res.success && res.data.url)
+          .map((res) => res.data.url);
+
+        if (newUrls.length > 0) {
+          setFormData((prev) => {
+            const combinedImages = [...prev.images, ...newUrls].slice(0, 6);
+            return {
+              ...prev,
+              image: prev.image || combinedImages[0] || '',
+              images: combinedImages,
+            };
+          });
+          showAlert.success('Uploaded', `${newUrls.length} image(s) uploaded successfully`);
         }
       } catch (err: any) {
         showAlert.error('Upload Error', err.message);
       }
     }
+  };
+
+  const handleRemoveGalleryImage = (indexToRemove: number) => {
+    setFormData((prev) => {
+      const updatedImages = prev.images.filter((_, idx) => idx !== indexToRemove);
+      return {
+        ...prev,
+        image: updatedImages[0] || '',
+        images: updatedImages,
+      };
+    });
   };
 
   const [isCustomCategory, setIsCustomCategory] = useState(false);
@@ -116,6 +147,7 @@ export default function AdminProductsPage() {
     setFormData({
       name: '',
       image: '',
+      images: [],
       price: 1100,
       originalPrice: 1500,
       category: 'Puja Samagri',
@@ -137,9 +169,12 @@ export default function AdminProductsPage() {
     setIsCustomCategory(!availableCategories.includes(cat));
     setCustomCategoryInput(!availableCategories.includes(cat) ? cat : '');
 
+    const gallery = prod.images && prod.images.length > 0 ? prod.images : (prod.image ? [prod.image] : []);
+
     setFormData({
       name: prod.name,
-      image: prod.image,
+      image: prod.image || (gallery[0] || ''),
+      images: gallery,
       price: prod.price,
       originalPrice: prod.originalPrice || 0,
       category: cat,
@@ -176,6 +211,36 @@ export default function AdminProductsPage() {
     }
   };
 
+  const filteredProducts = products.filter((prod) => {
+    // Search Filter
+    const matchesSearch =
+      !searchTerm.trim() ||
+      prod.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (prod.category && prod.category.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    // Category Filter
+    const matchesCategory =
+      selectedCategoryFilter === 'ALL' || prod.category === selectedCategoryFilter;
+
+    // Stock Filter
+    const matchesStock =
+      selectedStockFilter === 'ALL' ||
+      (selectedStockFilter === 'IN_STOCK' && prod.inStock) ||
+      (selectedStockFilter === 'OUT_OF_STOCK' && !prod.inStock);
+
+    // Pandit Filter
+    const pId = typeof prod.panditId === 'object' && prod.panditId !== null
+      ? (prod.panditId._id || prod.panditId.id || '')
+      : (prod.panditId || '');
+
+    const matchesPandit =
+      selectedPanditFilter === 'ALL' ||
+      (selectedPanditFilter === 'GENERAL' && !pId) ||
+      pId === selectedPanditFilter;
+
+    return matchesSearch && matchesCategory && matchesStock && matchesPandit;
+  });
+
   if (loading) return <LoadingSpinner />;
 
   return (
@@ -203,6 +268,98 @@ export default function AdminProductsPage() {
         </button>
       </div>
 
+      {/* Filter & Search Bar */}
+      <div className="bg-white p-4 rounded-3xl border border-[#eadfce] shadow-xs space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-[#7a1f1f] uppercase tracking-wider">Filters:</span>
+            <span className="text-[11px] bg-amber-100 text-[#8f3f12] font-semibold px-2.5 py-0.5 rounded-full">
+              Showing {filteredProducts.length} of {products.length} Products
+            </span>
+          </div>
+
+          {(searchTerm || selectedCategoryFilter !== 'ALL' || selectedStockFilter !== 'ALL' || selectedPanditFilter !== 'ALL') && (
+            <button
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategoryFilter('ALL');
+                setSelectedStockFilter('ALL');
+                setSelectedPanditFilter('ALL');
+              }}
+              className="text-xs font-semibold text-rose-600 hover:text-rose-800 underline transition-colors"
+            >
+              Reset All Filters
+            </button>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {/* Search Box */}
+          <div>
+            <label className="block text-[11px] font-bold text-[#75695d] mb-1">Search Product</label>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search by name or category..."
+              className="w-full px-3 py-2 text-xs rounded-xl border border-[#eadfce] focus:outline-none focus:border-[#c96b18] bg-amber-50/20"
+            />
+          </div>
+
+          {/* Category Filter */}
+          <div>
+            <label className="block text-[11px] font-bold text-[#75695d] mb-1">Category</label>
+            <select
+              value={selectedCategoryFilter}
+              onChange={(e) => setSelectedCategoryFilter(e.target.value)}
+              className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-[#eadfce] focus:outline-none focus:border-[#c96b18] bg-white text-[#2b2118]"
+            >
+              <option value="ALL">All Categories</option>
+              {availableCategories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Stock Filter */}
+          <div>
+            <label className="block text-[11px] font-bold text-[#75695d] mb-1">Stock Status</label>
+            <select
+              value={selectedStockFilter}
+              onChange={(e) => setSelectedStockFilter(e.target.value)}
+              className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-[#eadfce] focus:outline-none focus:border-[#c96b18] bg-white text-[#2b2118]"
+            >
+              <option value="ALL">All Stock Status</option>
+              <option value="IN_STOCK">✅ In Stock Only</option>
+              <option value="OUT_OF_STOCK">❌ Out of Stock Only</option>
+            </select>
+          </div>
+
+          {/* Assigned Pandit Filter */}
+          <div>
+            <label className="block text-[11px] font-bold text-[#75695d] mb-1">Assigned Pandit</label>
+            <select
+              value={selectedPanditFilter}
+              onChange={(e) => setSelectedPanditFilter(e.target.value)}
+              className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-[#eadfce] focus:outline-none focus:border-[#c96b18] bg-white text-[#2b2118]"
+            >
+              <option value="ALL">All Pandits</option>
+              <option value="GENERAL">General / Store Only</option>
+              {pandits.map((p) => {
+                const idVal = p._id || p.id || '';
+                return (
+                  <option key={idVal} value={idVal}>
+                    {p.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+      </div>
+
       {/* Products Table */}
       <div className="bg-white rounded-3xl border border-[#eadfce] overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
@@ -219,14 +376,14 @@ export default function AdminProductsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#eadfce]/60 text-xs text-[#2b2118]">
-              {products.length === 0 ? (
+              {filteredProducts.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="p-8 text-center text-[#75695d]">
-                    No products added yet. Click "Add New Product" to create one.
+                    No products match the selected filters. Try resetting filters or search term.
                   </td>
                 </tr>
               ) : (
-                products.map((prod) => {
+                filteredProducts.map((prod) => {
                   const pId = prod._id || prod.id;
                   const panditObj = typeof prod.panditId === 'object' ? prod.panditId : null;
                   const panditDisplayName = panditObj?.name || prod.panditName || 'General / Store';
@@ -463,34 +620,81 @@ export default function AdminProductsPage() {
                 </div>
               </div>
 
-              {/* Image Upload / URL */}
-              <div>
-                <label className="block text-xs font-bold text-[#2b2118] mb-1">
-                  Product Image (Upload File or Enter Image URL) *
-                </label>
+              {/* Product Images Upload (Up to 5-6 Images) */}
+              <div className="bg-amber-50/40 p-4 rounded-2xl border border-amber-200 space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold text-[#7a1f1f]">
+                    Product Images (Upload 4-5 Images) *
+                  </label>
+                  <span className="text-[10px] text-[#75695d]">
+                    {formData.images.length} / 6 Images Added
+                  </span>
+                </div>
+
                 <div className="flex gap-2 items-center">
                   <input
                     type="text"
-                    required
                     value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="Upload image or enter URL..."
-                    className="flex-1 px-3.5 py-2 text-xs rounded-xl border border-[#eadfce] focus:outline-none focus:border-[#c96b18]"
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setFormData((prev) => {
+                        const updated = [...prev.images];
+                        if (updated.length === 0 && val) updated.push(val);
+                        else if (val) updated[0] = val;
+                        return { ...prev, image: val, images: updated };
+                      });
+                    }}
+                    placeholder="Enter main image URL or upload multiple files..."
+                    className="flex-1 px-3.5 py-2 text-xs rounded-xl border border-[#eadfce] bg-white focus:outline-none focus:border-[#c96b18]"
                   />
-                  <label className="cursor-pointer bg-amber-100 hover:bg-amber-200 text-[#7a1f1f] text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-300 flex items-center gap-1.5 shrink-0 transition-colors">
+                  <label className="cursor-pointer bg-saffron-gradient text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xs flex items-center gap-1.5 shrink-0 hover:scale-105 transition-all">
                     <Upload className="w-3.5 h-3.5" />
-                    <span>Upload</span>
+                    <span>Upload Images</span>
                     <input
                       type="file"
+                      multiple
                       accept="image/*"
                       onChange={handleImageUpload}
                       className="hidden"
                     />
                   </label>
                 </div>
-                {formData.image && (formData.image.startsWith('http') || formData.image.startsWith('blob:') || formData.image.startsWith('data:')) && (
-                  <div className="mt-2 relative w-20 h-20 rounded-xl overflow-hidden border border-[#eadfce] bg-gray-50">
-                    <Image src={formData.image} alt="Preview" fill className="object-cover" />
+
+                {/* Gallery Previews Grid */}
+                {formData.images.length > 0 && (
+                  <div className="flex flex-wrap gap-3 pt-2">
+                    {formData.images.map((imgUrl, idx) => (
+                      <div
+                        key={idx}
+                        className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 shadow-xs group bg-gray-100 ${
+                          formData.image === imgUrl ? 'border-[#c96b18] ring-2 ring-[#c96b18]/30' : 'border-amber-200'
+                        }`}
+                      >
+                        <Image src={imgUrl} alt={`Product image ${idx + 1}`} fill className="object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveGalleryImage(idx)}
+                          className="absolute top-1 right-1 bg-rose-600 text-white p-1 rounded-full shadow-md hover:bg-rose-700 transition-colors"
+                          title="Remove Image"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                        {formData.image === imgUrl && (
+                          <span className="absolute bottom-0 inset-x-0 bg-[#c96b18] text-white text-[9px] font-bold text-center py-0.5">
+                            Main
+                          </span>
+                        )}
+                        {formData.image !== imgUrl && (
+                          <button
+                            type="button"
+                            onClick={() => setFormData((prev) => ({ ...prev, image: imgUrl }))}
+                            className="absolute inset-0 bg-black/40 text-white text-[9px] font-bold opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-1 text-center"
+                          >
+                            Set Main
+                          </button>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
