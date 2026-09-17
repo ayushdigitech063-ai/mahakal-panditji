@@ -15,7 +15,7 @@ const ReactQuill = dynamic(() => import('react-quill-new'), {
   ssr: false,
   loading: () => <div className="p-4 text-xs font-semibold text-[#75695d]">Loading Rich Text Editor...</div>,
 });
-
+// oiaphdfodsh
 export default function AdminBlogsPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);

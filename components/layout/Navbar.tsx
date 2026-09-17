@@ -45,6 +45,7 @@ export const Navbar: React.FC = () => {
     { name: 'Tours', href: '/tours' },
     { name: 'Travel', href: '/travel' },
     { name: 'Packages', href: '/packages' },
+    { name: 'Products', href: '/products' },
     { name: 'About', href: '/about' },
     { name: 'Blog', href: '/blog' },
   ];
@@ -184,6 +185,15 @@ export const Navbar: React.FC = () => {
             }`}
           >
             Packages
+          </Link>
+
+          <Link
+            href="/products"
+            className={`text-xs xl:text-sm font-medium transition-colors hover:text-[#c96b18] ${
+              pathname.startsWith('/products') ? 'text-[#c96b18] font-semibold' : isScrolled ? 'text-[#2b2118]' : 'text-white/90'
+            }`}
+          >
+            Products
           </Link>
 
           <Link

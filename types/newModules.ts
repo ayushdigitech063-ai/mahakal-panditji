@@ -10,6 +10,7 @@ export interface Room {
 
 export interface Hotel {
   id: string;
+  _id?: string;
   name: string;
   slug: string;
   coverImage: string;
@@ -69,4 +70,23 @@ export interface SpiritualPackage {
   itinerary?: Array<{ day: number; title: string; details: string }>;
   featured?: boolean;
   isActive: boolean;
+}
+
+export interface Product {
+  _id?: string;
+  id?: string;
+  name: string;
+  slug: string;
+  image: string;
+  price: number;
+  originalPrice?: number;
+  category: string;
+  description: string;
+  panditId?: any;
+  panditName?: string;
+  inStock?: boolean;
+  isActive: boolean;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }

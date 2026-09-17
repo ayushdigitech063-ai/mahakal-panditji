@@ -1,5 +1,6 @@
 export interface Pandit {
   _id: string;
+  id?: string;
   name: string;
   slug: string;
   image: string;

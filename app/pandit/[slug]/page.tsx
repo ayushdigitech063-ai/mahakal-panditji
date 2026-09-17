@@ -4,12 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Star, MapPin, Award, CheckCircle2, Phone, MessageCircle, ArrowLeft, Flame, HelpCircle, Tag, ScrollText, ShieldCheck, ChevronDown, ChevronUp } from 'lucide-react';
+import { Star, MapPin, Award, CheckCircle2, Phone, MessageCircle, ArrowLeft, Flame, HelpCircle, Tag, ScrollText, ShieldCheck, ChevronDown, ChevronUp, ShoppingBag } from 'lucide-react';
 import { Navbar } from '../../../components/layout/Navbar';
 import { Footer } from '../../../components/layout/Footer';
 import { LoadingSpinner } from '../../../components/ui/LoadingSpinner';
 import { panditService } from '@/services/panditService';
-import { Pandit } from '@/types';
+import { productService } from '@/services/productService';
+import { ProductCard } from '@/components/product/ProductCard';
+import { Pandit, Product } from '@/types';
 import { resolveImageUrl } from '@/lib/api';
 
 const DEFAULT_PANDIT_IMG = '/images/pandits/pandit1.jpg';
@@ -18,6 +20,7 @@ export default function PanditDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
   const [pandit, setPandit] = useState<Pandit | null>(null);
+  const [panditProducts, setPanditProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [imgSrc, setImgSrc] = useState<string>(DEFAULT_PANDIT_IMG);
@@ -28,6 +31,12 @@ export default function PanditDetailPage() {
         setPandit(data);
         if (data) {
           setImgSrc(resolveImageUrl(data.image, DEFAULT_PANDIT_IMG));
+          const pId = data._id || data.id;
+          if (pId) {
+            productService.getProducts({ panditId: pId }).then((prods) => {
+              setPanditProducts(prods);
+            });
+          }
         }
         setLoading(false);
       });
@@ -83,10 +92,17 @@ export default function PanditDetailPage() {
       <Navbar />
 
       <main className="flex-1 pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-10">
-        <Link href="/pandits" className="inline-flex items-center gap-2 text-xs font-bold text-[#c96b18] hover:text-[#8f3f12]">
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Pandits List</span>
-        </Link>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Link href="/pandits" className="inline-flex items-center gap-2 text-xs font-bold text-[#c96b18] hover:text-[#8f3f12] bg-white px-3.5 py-1.5 rounded-full border border-[#eadfce] shadow-xs">
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Pandits Directory</span>
+          </Link>
+
+          <Link href="/products" className="inline-flex items-center gap-2 text-xs font-bold text-[#7a1f1f] hover:text-[#c96b18] bg-amber-100/70 px-3.5 py-1.5 rounded-full border border-amber-200 shadow-xs">
+            <ShoppingBag className="w-4 h-4" />
+            <span>Back to Products Catalog</span>
+          </Link>
+        </div>
 
         {/* Profile Banner & Detail Header Card */}
         <div className="bg-white rounded-3xl border border-[#eadfce] p-6 sm:p-10 shadow-spiritual grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
@@ -214,6 +230,34 @@ export default function PanditDetailPage() {
                 ))}
               </div>
             </div>
+
+            {/* Pandit's Associated Products & Samagri */}
+            {panditProducts.length > 0 && (
+              <div className="bg-white rounded-3xl border border-[#eadfce] p-8 shadow-sm space-y-6">
+                <div className="flex items-center justify-between border-b border-[#eadfce] pb-4">
+                  <div>
+                    <h3 className="heading-spiritual text-xl font-bold text-[#7a1f1f]">
+                      {pandit.name} Ji's Consecrated Products & Samagri
+                    </h3>
+                    <p className="text-xs text-[#75695d] mt-1">
+                      Directly order sacred items consecrated by {pandit.name} via WhatsApp.
+                    </p>
+                  </div>
+                  <Link
+                    href="/products"
+                    className="text-xs font-bold text-[#c96b18] hover:text-[#8f3f12] bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200"
+                  >
+                    View All Products →
+                  </Link>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {panditProducts.map((prod) => (
+                    <ProductCard key={prod._id || prod.id} product={prod} />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Frequently Asked Questions */}
             <div className="bg-white rounded-3xl border border-[#eadfce] p-8 shadow-sm space-y-6">

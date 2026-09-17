@@ -130,8 +130,8 @@ export const HomeAccommodationsSlider: React.FC = () => {
               isMouseDown ? 'cursor-grabbing select-none' : 'cursor-grab'
             }`}
           >
-            {filtered.map((item) => (
-              <div key={item.id} className="snap-start shrink-0">
+            {filtered.map((item, index) => (
+              <div key={item.id || item._id || item.slug || index} className="snap-start shrink-0">
                 <HotelCard hotel={item} />
               </div>
             ))}

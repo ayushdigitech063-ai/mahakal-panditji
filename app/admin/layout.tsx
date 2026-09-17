@@ -21,6 +21,7 @@ import {
   Building2,
   MapPin,
   Car,
+  ShoppingBag,
 } from 'lucide-react';
 import { apiClient } from '../../lib/apiClient';
 import { ENDPOINTS } from '../../lib/endpoints';
@@ -94,6 +95,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Pandit Ji', href: '/admin/pandits', icon: Users },
     { name: 'Pooja Services', href: '/admin/poojas', icon: Flame },
+    { name: 'Products CMS', href: '/admin/products', icon: ShoppingBag },
     { name: 'Hotels & Niwas', href: '/admin/hotels', icon: Building2 },
     { name: 'Tour Packages', href: '/admin/tours', icon: MapPin },
     { name: 'Travel Cabs', href: '/admin/travel', icon: Car },
