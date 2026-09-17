@@ -93,11 +93,29 @@ export default function AdminProductsPage() {
     }
   };
 
+  const [isCustomCategory, setIsCustomCategory] = useState(false);
+  const [customCategoryInput, setCustomCategoryInput] = useState('');
+
+  const defaultPresetCategories = [
+    'Puja Samagri',
+    'Rudraksha & Mala',
+    'Yantra & Idols',
+    'Brass & Silver Items',
+    'Sacred Threads & Tilak',
+    'Other',
+  ];
+
+  const availableCategories = Array.from(
+    new Set([...defaultPresetCategories, ...products.map((p) => p.category).filter(Boolean)])
+  );
+
   const handleOpenCreateModal = () => {
     setEditingProduct(null);
+    setIsCustomCategory(false);
+    setCustomCategoryInput('');
     setFormData({
       name: '',
-      image: '/images/products/sample.jpg',
+      image: '',
       price: 1100,
       originalPrice: 1500,
       category: 'Puja Samagri',
@@ -115,12 +133,16 @@ export default function AdminProductsPage() {
       ? (prod.panditId._id || prod.panditId.id || '')
       : (prod.panditId || '');
 
+    const cat = prod.category || 'Puja Samagri';
+    setIsCustomCategory(!availableCategories.includes(cat));
+    setCustomCategoryInput(!availableCategories.includes(cat) ? cat : '');
+
     setFormData({
       name: prod.name,
       image: prod.image,
       price: prod.price,
       originalPrice: prod.originalPrice || 0,
-      category: prod.category || 'Puja Samagri',
+      category: cat,
       description: prod.description,
       panditId: pId,
       inStock: prod.inStock !== undefined ? prod.inStock : true,
@@ -132,13 +154,19 @@ export default function AdminProductsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const finalCategory = isCustomCategory
+        ? (customCategoryInput.trim() || 'Puja Samagri')
+        : formData.category;
+
+      const payload = { ...formData, category: finalCategory };
+
       if (editingProduct) {
         const pId = editingProduct._id || editingProduct.id;
         if (!pId) return;
-        await productService.updateProduct(pId, formData);
+        await productService.updateProduct(pId, payload);
         showAlert.success('Updated', 'Product details updated successfully');
       } else {
-        await productService.createProduct(formData);
+        await productService.createProduct(payload);
         showAlert.success('Created', 'New product added successfully');
       }
       setModalOpen(false);
@@ -345,20 +373,38 @@ export default function AdminProductsPage() {
 
                 <div>
                   <label className="block text-xs font-bold text-[#2b2118] mb-1">
-                    Category
+                    Category *
                   </label>
                   <select
-                    value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3.5 py-2 text-xs rounded-xl border border-[#eadfce] focus:outline-none focus:border-[#c96b18]"
+                    value={isCustomCategory ? '__CUSTOM__' : formData.category}
+                    onChange={(e) => {
+                      if (e.target.value === '__CUSTOM__') {
+                        setIsCustomCategory(true);
+                      } else {
+                        setIsCustomCategory(false);
+                        setFormData({ ...formData, category: e.target.value });
+                      }
+                    }}
+                    className="w-full px-3.5 py-2 text-xs font-semibold rounded-xl border border-[#eadfce] focus:outline-none focus:border-[#c96b18]"
                   >
-                    <option value="Puja Samagri">Puja Samagri</option>
-                    <option value="Rudraksha & Mala">Rudraksha & Mala</option>
-                    <option value="Yantra & Idols">Yantra & Idols</option>
-                    <option value="Brass & Silver">Brass & Silver Items</option>
-                    <option value="Sacred Threads & Tilak">Sacred Threads & Tilak</option>
-                    <option value="Other">Other Spiritual Product</option>
+                    {availableCategories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
+                    <option value="__CUSTOM__">➕ Add New / Custom Category...</option>
                   </select>
+
+                  {isCustomCategory && (
+                    <input
+                      type="text"
+                      required
+                      value={customCategoryInput}
+                      onChange={(e) => setCustomCategoryInput(e.target.value)}
+                      placeholder="Enter new custom category name..."
+                      className="w-full mt-2 px-3.5 py-2 text-xs font-bold rounded-xl border border-[#c96b18] bg-amber-50/50 focus:outline-none focus:border-[#7a1f1f]"
+                    />
+                  )}
                 </div>
               </div>
 
@@ -420,7 +466,7 @@ export default function AdminProductsPage() {
               {/* Image Upload / URL */}
               <div>
                 <label className="block text-xs font-bold text-[#2b2118] mb-1">
-                  Product Image URL or Upload *
+                  Product Image (Upload File or Enter Image URL) *
                 </label>
                 <div className="flex gap-2 items-center">
                   <input
@@ -428,7 +474,7 @@ export default function AdminProductsPage() {
                     required
                     value={formData.image}
                     onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="/images/products/sample.jpg"
+                    placeholder="Upload image or enter URL..."
                     className="flex-1 px-3.5 py-2 text-xs rounded-xl border border-[#eadfce] focus:outline-none focus:border-[#c96b18]"
                   />
                   <label className="cursor-pointer bg-amber-100 hover:bg-amber-200 text-[#7a1f1f] text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-300 flex items-center gap-1.5 shrink-0 transition-colors">
@@ -442,7 +488,7 @@ export default function AdminProductsPage() {
                     />
                   </label>
                 </div>
-                {formData.image && (
+                {formData.image && (formData.image.startsWith('http') || formData.image.startsWith('blob:') || formData.image.startsWith('data:')) && (
                   <div className="mt-2 relative w-20 h-20 rounded-xl overflow-hidden border border-[#eadfce] bg-gray-50">
                     <Image src={formData.image} alt="Preview" fill className="object-cover" />
                   </div>
@@ -463,27 +509,44 @@ export default function AdminProductsPage() {
                 />
               </div>
 
-              {/* Checkboxes */}
-              <div className="flex items-center gap-6 pt-2">
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-[#2b2118]">
-                  <input
-                    type="checkbox"
-                    checked={formData.inStock}
-                    onChange={(e) => setFormData({ ...formData, inStock: e.target.checked })}
-                    className="w-4 h-4 text-[#c96b18] rounded accent-[#c96b18]"
-                  />
-                  <span>In Stock</span>
+              {/* Stock Status & Visibility Controls */}
+              <div className="bg-amber-50/50 p-4 rounded-2xl border border-amber-200 space-y-3">
+                <label className="block text-xs font-bold text-[#7a1f1f] flex items-center gap-1.5">
+                  <ShoppingBag className="w-4 h-4 text-[#c96b18]" />
+                  <span>Product Inventory & Stock Status *</span>
                 </label>
 
-                <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-[#2b2118]">
-                  <input
-                    type="checkbox"
-                    checked={formData.isActive}
-                    onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                    className="w-4 h-4 text-[#c96b18] rounded accent-[#c96b18]"
-                  />
-                  <span>Active (Visible on Website)</span>
-                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* Stock Status Selector */}
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#75695d] mb-1">
+                      Stock Availability
+                    </label>
+                    <select
+                      value={formData.inStock ? 'true' : 'false'}
+                      onChange={(e) => setFormData({ ...formData, inStock: e.target.value === 'true' })}
+                      className="w-full px-3.5 py-2 text-xs font-bold rounded-xl border border-[#eadfce] bg-white text-[#2b2118] focus:outline-none focus:border-[#c96b18]"
+                    >
+                      <option value="true">✅ In Stock (उपलब्ध है)</option>
+                      <option value="false">❌ Out of Stock (स्टॉक खत्म है)</option>
+                    </select>
+                  </div>
+
+                  {/* Website Visibility Selector */}
+                  <div>
+                    <label className="block text-[11px] font-bold text-[#75695d] mb-1">
+                      Website Visibility
+                    </label>
+                    <select
+                      value={formData.isActive ? 'true' : 'false'}
+                      onChange={(e) => setFormData({ ...formData, isActive: e.target.value === 'true' })}
+                      className="w-full px-3.5 py-2 text-xs font-bold rounded-xl border border-[#eadfce] bg-white text-[#2b2118] focus:outline-none focus:border-[#c96b18]"
+                    >
+                      <option value="true">🟢 Active (Visible on Website)</option>
+                      <option value="false">🔴 Hidden (Draft Mode)</option>
+                    </select>
+                  </div>
+                </div>
               </div>
 
               {/* Buttons */}

@@ -53,15 +53,21 @@ export default function ProductsPage() {
     fetchData();
   }, []);
 
-  const categories = [
-    'All',
+  const defaultCategories = [
     'Puja Samagri',
     'Rudraksha & Mala',
     'Yantra & Idols',
     'Brass & Silver',
     'Sacred Threads & Tilak',
-    'Other',
   ];
+
+  const categories = Array.from(
+    new Set([
+      'All',
+      ...defaultCategories,
+      ...products.map((p) => p.category).filter(Boolean),
+    ])
+  );
 
   const filteredProducts = products.filter((item) => {
     // Category Filter
