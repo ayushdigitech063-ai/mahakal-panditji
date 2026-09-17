@@ -64,6 +64,9 @@ export const Footer: React.FC<FooterProps> = ({ settings }) => {
               <li>
                 <Link href="/contact" className="hover:text-amber-400 transition-colors">Contact & Booking</Link>
               </li>
+              <li>
+                <Link href="/sitemap" className="hover:text-amber-400 transition-colors">Website Sitemap</Link>
+              </li>
             </ul>
           </div>
 
